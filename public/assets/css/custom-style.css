@@ -96,6 +96,15 @@
 #section_newest .slick-slide .border-light,
 #section_featured .slick-slide .border-light,
 #section_best_selling .slick-slide .border-light {
-    border-radius: 10px;
-    border: 1px solid #f1f1f1;
+    border-radius: 10px !important;
+    border: 1px solid #f1f1f1 !important;
+}
+
+#section_flash_sale {
+    background: var(--secondary)
+}
+
+#section_flash_sale .head_flash {
+    width: 400px;
+    margin: auto;
 }
