@@ -5,15 +5,8 @@
     <div class="home-banner-area mb-4 pt-3">
         <div class="container">
             <div class="row gutters-10 position-relative">
-                <div class="col-lg-3 position-static d-none d-lg-block">
-                    @include('frontend.partials.category_menu')
-                </div>
 
-                @php
-                    $num_todays_deal = count($todays_deal_products);
-                @endphp
-
-                <div class="@if($num_todays_deal > 0) col-lg-7 @else col-lg-9 @endif">
+                <div class="col-lg-12">
                     @if (get_setting('home_slider_images') != null)
                         <div class="aiz-carousel dots-inside-bottom mobile-img-auto-height" data-arrows="true" data-dots="true" data-autoplay="true">
                             @php $slider_images = json_decode(get_setting('home_slider_images'), true);  @endphp
@@ -36,73 +29,8 @@
                             @endforeach
                         </div>
                     @endif
-                    @if (count($featured_categories) > 0)
-                        <ul class="list-unstyled mb-0 row gutters-5">
-                            @foreach ($featured_categories as $key => $category)
-                                <li class="minw-0 col-4 col-md mt-3">
-                                    <a href="{{ route('products.category', $category->slug) }}" class="d-block rounded bg-white p-2 text-reset shadow-sm">
-                                        <img
-                                            src="{{ static_asset('assets/img/placeholder.jpg') }}"
-                                            data-src="{{ uploaded_asset($category->banner) }}"
-                                            alt="{{ $category->getTranslation('name') }}"
-                                            class="lazyload img-fit"
-                                            height="78"
-                                            onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder-rect.jpg') }}';"
-                                        >
-                                        <div class="text-truncate fs-12 fw-600 mt-2 opacity-70">{{ $category->getTranslation('name') }}</div>
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @endif
-                </div>
 
-                @if($num_todays_deal > 0)
-                <div class="col-lg-2 order-3 mt-3 mt-lg-0">
-                    <div class="bg-white rounded shadow-sm">
-                        <div class="bg-soft-primary rounded-top p-3 d-flex align-items-center justify-content-center">
-                            <span class="fw-600 fs-16 mr-2 text-truncate">
-                                {{ translate('Todays Deal') }}
-                            </span>
-                            <span class="badge badge-primary badge-inline">{{ translate('Hot') }}</span>
-                        </div>
-                        <div class="c-scrollbar-light overflow-auto h-lg-400px p-2 bg-primary rounded-bottom">
-                            <div class="gutters-5 lg-no-gutters row row-cols-2 row-cols-lg-1">
-                            @foreach ($todays_deal_products as $key => $product)
-                                @if ($product != null)
-                                <div class="col mb-2">
-                                    <a href="{{ route('product', $product->slug) }}" class="d-block p-2 text-reset bg-white h-100 rounded">
-                                        <div class="row gutters-5 align-items-center">
-                                            <div class="col-xxl">
-                                                <div class="img">
-                                                    <img
-                                                        class="lazyload img-fit h-140px h-lg-80px"
-                                                        src="{{ static_asset('assets/img/placeholder.jpg') }}"
-                                                        data-src="{{ uploaded_asset($product->thumbnail_img) }}"
-                                                        alt="{{ $product->getTranslation('name') }}"
-                                                        onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';"
-                                                    >
-                                                </div>
-                                            </div>
-                                            <div class="col-xxl">
-                                                <div class="fs-16">
-                                                    <span class="d-block text-primary fw-600">{{ home_discounted_base_price($product) }}</span>
-                                                    @if(home_base_price($product) != home_discounted_base_price($product))
-                                                        <del class="d-block opacity-70">{{ home_base_price($product) }}</del>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                @endif
-                            @endforeach
-                            </div>
-                        </div>
-                    </div>
                 </div>
-                @endif
-
             </div>
         </div>
     </div>
@@ -128,6 +56,142 @@
     </div>
     @endif
 
+    @if (count($featured_categories) > 0)
+        <div class="container">
+        <div class="product-category mb-4 pt-3">
+            <h2 class="h5 text-center  fw-700 mb-0">Our Product Categories
+                <a href="#" id="btn_see_all_category"><i class="fa fa-menu"></i> See All</a>
+            </h2>
+        <ul class="list-unstyled  mb-0 row gutters-5">
+            @foreach ($featured_categories as $key => $category)
+                <li class="minw-0 col-4 col-md mt-3 cate_cell">
+                    <a href="{{ route('products.category', $category->slug) }}" class="d-block rounded bg-white p-2 text-reset shadow-sm">
+                        <img
+                            src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                            data-src="{{ uploaded_asset($category->banner) }}"
+                            alt="{{ $category->getTranslation('name') }}"
+                            class="lazyload img-fit"
+                            height="78"
+                            onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder-rect.jpg') }}';"
+                        >
+                        <div class="text-center text-truncate fs-12 fw-600 mt-2 opacity-70 cate_name">{{ $category->getTranslation('name') }}</div>
+                    </a>
+                </li>
+            @endforeach
+        </ul>
+        </div>
+        </div>
+    @endif
+
+    @php
+        $num_todays_deal = count($todays_deal_products);
+    @endphp
+    @if($num_todays_deal > 0)
+        <div class="container">
+        <div class="row product-flash-sale mb-4 pt-3">
+            <div class="col-lg-12 order-3 mt-3 mt-lg-0">
+                <div class="bg-white">
+                    <div class="p-3 d-flex">
+                            <span class="fw-600 fs-18 mr-2 text-truncate">
+                                {{ translate('Flash Sale') }}
+                            </span>
+
+                            <div id="clockdiv">
+                                <div>
+                                    <span class="days"></span>
+                                </div>
+                                <div>
+                                    <span class="hours"></span>
+                                </div>
+                                <div>
+                                    <span class="minutes"></span>
+                                </div>
+                                <div>
+                                    <span class="seconds"></span>
+                                </div>
+                            </div>
+                            <script>
+                                function getTimeRemaining(endtime) {
+                                    var t = Date.parse(endtime) - Date.parse(new Date());
+                                    var seconds = Math.floor((t / 1000) % 60);
+                                    var minutes = Math.floor((t / 1000 / 60) % 60);
+                                    var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+                                    var days = Math.floor(t / (1000 * 60 * 60 * 24));
+                                    return {
+                                        'total': t,
+                                        'days': days,
+                                        'hours': hours,
+                                        'minutes': minutes,
+                                        'seconds': seconds
+                                    };
+                                }
+
+                                function initializeClock(id, endtime) {
+                                    var clock = document.getElementById(id);
+                                    var daysSpan = clock.querySelector('.days');
+                                    var hoursSpan = clock.querySelector('.hours');
+                                    var minutesSpan = clock.querySelector('.minutes');
+                                    var secondsSpan = clock.querySelector('.seconds');
+
+                                    function updateClock() {
+                                        var t = getTimeRemaining(endtime);
+
+                                        daysSpan.innerHTML = t.days;
+                                        hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+                                        minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+                                        secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+                                        if (t.total <= 0) {
+                                            clearInterval(timeinterval);
+                                        }
+                                    }
+
+                                    updateClock();
+                                    var timeinterval = setInterval(updateClock, 1000);
+                                }
+
+                                var deadline = new Date(Date.parse(new Date()) + 01 * 24 * 60 * 60 * 1000);
+                                initializeClock('clockdiv', deadline);
+                            </script>
+                    </div>
+                    <div class="p-2">
+                        <div class="gutters-5 lg-no-gutters ">
+                            @foreach ($todays_deal_products as $key => $product)
+                                @if ($product != null)
+                                    <div class="product-cell mb-2">
+                                        <a href="{{ route('product', $product->slug) }}" class="d-block p-2 text-reset bg-white h-100 rounded">
+                                            <div class="gutters-5 align-items-center">
+                                                <div class="col-xxl">
+                                                    <div class="img">
+                                                        <img
+                                                            class="lazyload img-fit h-140px h-lg-80px"
+                                                            src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                                                            data-src="{{ uploaded_asset($product->thumbnail_img) }}"
+                                                            alt="{{ $product->getTranslation('name') }}"
+                                                            onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';"
+                                                        >
+                                                    </div>
+                                                </div>
+                                                <div class="col-xxl">
+                                                    <div class="fs-16">
+                                                        <span class="d-block text-primary fw-600">{{ home_discounted_base_price($product) }}</span>
+                                                        @if(home_base_price($product) != home_discounted_base_price($product))
+                                                            <del class="d-block opacity-70">{{ home_base_price($product) }}</del>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    @endif
 
     {{-- Flash Deal --}}
     @php
@@ -185,7 +249,7 @@
                         </div>
                     </div>
                 </div>
-            </section>   
+            </section>
         @endif
     </div>
 

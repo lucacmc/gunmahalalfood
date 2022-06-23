@@ -6,6 +6,7 @@ use custom-style.css
 */
 
 :root {
+    --button: #193381;
     --blue: #007bff;
     --indigo: #6610f2;
     --purple: #6f42c1;
@@ -32,7 +33,8 @@ use custom-style.css
     --soft-warning: rgba(255, 197, 25, 0.15);
     --danger: #ef486a;
     --soft-danger: rgba(239, 72, 106, 0.15);
-    --light: #f2f3f8;
+    /*--light: #f2f3f8;*/
+    --light: #fff;
     --dark: #111723;
     --soft-dark: rgba(42, 50, 66, 0.15);
     --breakpoint-xs: 0;
@@ -4172,7 +4174,7 @@ input[type="number"] {
 }
 [dir="rtl"] .aiz-steps > *:not(:first-of-type):before {
     left: calc(50% + 20px);
-    right: auto; 
+    right: auto;
 }
 .aiz-steps .title {
     font-size: 15px;
@@ -6749,7 +6751,7 @@ ul.social.colored [class*="linkedin"] {
     right: 20px;
 }
 [dir="rtl"] .hover-category-menu .all-category::before {
-    left: 20px;    
+    left: 20px;
     right: auto;
 }
 
@@ -7278,7 +7280,7 @@ ul.social.colored [class*="linkedin"] {
     box-shadow: 2px 1px 6px 2px rgba(0, 0, 0, 0.1), 0 4px 4px 0px rgba(0, 0, 0, 0.06) !important;
 }
 
-.badge-custom .box {    
+.badge-custom .box {
     height: 26px;
     width: 26px;
     background: #ff0000;

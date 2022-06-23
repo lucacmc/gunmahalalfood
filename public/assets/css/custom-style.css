@@ -1,1 +1,69 @@
 /*your custom css goes here*/
+
+#btn_see_all_category{
+    background: var(--button);
+    color: #fff;
+    font-size: 12px;
+    border-radius: 3px;
+    padding: 3px 15px;
+    float: right;
+}
+
+.product-category .cate_name
+{
+    color:#5A6F43;
+}
+.product-category .cate_cell{
+    border: 1px solid #ccc;
+    display: inline-block;
+    width: calc(16.66% - 10px);
+}
+
+.product-category ul.row{
+    display: block;
+}
+
+.product-category li{
+    display: inline-block;
+
+}
+.product-flash-sale{
+    border: 1px solid #ccc;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.product-flash-sale .product-cell{
+    border: 1px solid #ccc;
+    display: inline-block;
+    width: calc(16.66% - 10px);
+}
+
+#clockdiv{
+    font-family: Arial,sans-serif;
+    color: white;
+    display: inline-block;
+    font-weight: bold;
+    text-align: center;
+    font-size: 14px;
+}
+
+#clockdiv > div{
+    padding: 2px;
+    border-radius: 1px;
+    background: #fff;
+    display: inline-block;
+}
+
+#clockdiv div > span{
+    padding: 5px;
+    border-radius: 3px;
+    background: #e73a2a;
+    display: inline-block;
+}
+
+.smalltext{
+    padding-top: 15px;
+    font-size: 16px;
+}
+
