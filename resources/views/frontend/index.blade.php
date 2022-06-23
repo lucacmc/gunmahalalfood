@@ -83,115 +83,42 @@
         </div>
     @endif
 
+
+    {{-- Flash Deal --}}
     @php
-        $num_todays_deal = count($todays_deal_products);
+        $flash_deal = \App\Models\FlashDeal::where('status', 1)->where('featured', 1)->first();
     @endphp
-    @if($num_todays_deal > 0)
+    @if($flash_deal != null && strtotime(date('Y-m-d H:i:s')) >= $flash_deal->start_date && strtotime(date('Y-m-d H:i:s')) <= $flash_deal->end_date)
+    <section class="mb-4">
         <div class="container">
-        <div class="row product-flash-sale mb-4 pt-3">
-            <div class="col-lg-12 order-3 mt-3 mt-lg-0">
-                <div class="bg-white">
-                    <div class="p-3 d-flex">
-                            <span class="fw-600 fs-18 mr-2 text-truncate">
-                                {{ translate('Flash Sale') }}
-                            </span>
+            <div class="px-2 py-4 px-md-4 py-md-3 bg-white shadow-sm rounded">
 
-                            <div id="clockdiv">
-                                <div>
-                                    <span class="days"></span>
-                                </div>
-                                <div>
-                                    <span class="hours"></span>
-                                </div>
-                                <div>
-                                    <span class="minutes"></span>
-                                </div>
-                                <div>
-                                    <span class="seconds"></span>
-                                </div>
+                <div class="d-flex flex-wrap mb-3 align-items-baseline border-bottom">
+                    <h3 class="h5 fw-700 mb-0">
+                        <span class="border-bottom border-primary border-width-2 pb-3 d-inline-block">{{ translate('Flash Sale') }}</span>
+                    </h3>
+                    <div class="aiz-count-down ml-auto ml-lg-3 align-items-center" data-date="{{ date('Y/m/d H:i:s', $flash_deal->end_date) }}"></div>
+                    <a href="{{ route('flash-deal-details', $flash_deal->slug) }}" class="ml-auto mr-0 btn btn-primary btn-sm shadow-md w-100 w-md-auto">{{ translate('View More') }}</a>
+                </div>
+
+                <div class="aiz-carousel gutters-10 half-outside-arrow" data-items="6" data-xl-items="5" data-lg-items="4"  data-md-items="3" data-sm-items="2" data-xs-items="2" data-arrows='true'>
+                    @foreach ($flash_deal->flash_deal_products->take(20) as $key => $flash_deal_product)
+                        @php
+                            $product = \App\Models\Product::find($flash_deal_product->product_id);
+                        @endphp
+                        @if ($product != null && $product->published != 0)
+                            <div class="carousel-box">
+                                @include('frontend.partials.product_box_1',['product' => $product])
                             </div>
-                            <script>
-                                function getTimeRemaining(endtime) {
-                                    var t = Date.parse(endtime) - Date.parse(new Date());
-                                    var seconds = Math.floor((t / 1000) % 60);
-                                    var minutes = Math.floor((t / 1000 / 60) % 60);
-                                    var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
-                                    var days = Math.floor(t / (1000 * 60 * 60 * 24));
-                                    return {
-                                        'total': t,
-                                        'days': days,
-                                        'hours': hours,
-                                        'minutes': minutes,
-                                        'seconds': seconds
-                                    };
-                                }
-
-                                function initializeClock(id, endtime) {
-                                    var clock = document.getElementById(id);
-                                    var daysSpan = clock.querySelector('.days');
-                                    var hoursSpan = clock.querySelector('.hours');
-                                    var minutesSpan = clock.querySelector('.minutes');
-                                    var secondsSpan = clock.querySelector('.seconds');
-
-                                    function updateClock() {
-                                        var t = getTimeRemaining(endtime);
-
-                                        daysSpan.innerHTML = t.days;
-                                        hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
-                                        minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
-                                        secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
-
-                                        if (t.total <= 0) {
-                                            clearInterval(timeinterval);
-                                        }
-                                    }
-
-                                    updateClock();
-                                    var timeinterval = setInterval(updateClock, 1000);
-                                }
-
-                                var deadline = new Date(Date.parse(new Date()) + 01 * 24 * 60 * 60 * 1000);
-                                initializeClock('clockdiv', deadline);
-                            </script>
-                    </div>
-                    <div class="p-2">
-                        <div class="gutters-5 lg-no-gutters ">
-                            @foreach ($todays_deal_products as $key => $product)
-                                @if ($product != null)
-                                    <div class="product-cell mb-2">
-                                        <a href="{{ route('product', $product->slug) }}" class="d-block p-2 text-reset bg-white h-100 rounded">
-                                            <div class="gutters-5 align-items-center">
-                                                <div class="col-xxl">
-                                                    <div class="img">
-                                                        <img
-                                                            class="lazyload img-fit h-140px h-lg-80px"
-                                                            src="{{ static_asset('assets/img/placeholder.jpg') }}"
-                                                            data-src="{{ uploaded_asset($product->thumbnail_img) }}"
-                                                            alt="{{ $product->getTranslation('name') }}"
-                                                            onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';"
-                                                        >
-                                                    </div>
-                                                </div>
-                                                <div class="col-xxl">
-                                                    <div class="fs-16">
-                                                        <span class="d-block text-primary fw-600">{{ home_discounted_base_price($product) }}</span>
-                                                        @if(home_base_price($product) != home_discounted_base_price($product))
-                                                            <del class="d-block opacity-70">{{ home_base_price($product) }}</del>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
+                        @endif
+                    @endforeach
                 </div>
             </div>
         </div>
-        </div>
+    </section>
     @endif
+
+
     <div id="section_newest">
         @if (count($newest_products) > 0)
             <section class="mb-4">
