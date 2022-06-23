@@ -72,8 +72,8 @@
                         <li class="list-inline-item mr-3 border-right border-left-0 pr-3 pl-0">
                             <a href="tel:{{ get_setting('helpline_number') }}" class="text-reset d-inline-block opacity-60 py-2">
                                 <i class="la la-phone"></i>
-                                <span>{{ translate('Help line')}}</span>  
-                                <span>{{ get_setting('helpline_number') }}</span>    
+                                <span>{{ translate('Help line')}}</span>
+                                <span>{{ get_setting('helpline_number') }}</span>
                             </a>
                         </li>
                     @endif
@@ -175,14 +175,14 @@
             <div class="d-flex align-items-center">
 
                 <div class="col-auto col-xl-3 pl-0 pr-3 d-flex align-items-center">
-                    <a class="d-block py-20px mr-3 ml-0" href="{{ route('home') }}">
+                    <a class="d-block py-10px mr-3 ml-0" href="{{ route('home') }}">
                         @php
                             $header_logo = get_setting('header_logo');
                         @endphp
                         @if($header_logo != null)
-                            <img src="{{ uploaded_asset($header_logo) }}" alt="{{ env('APP_NAME') }}" class="mw-100 h-30px h-md-40px" height="40">
+                            <img src="{{ uploaded_asset($header_logo) }}" alt="{{ env('APP_NAME') }}" class="mw-100 h-30px h-md-60px" height="60">
                         @else
-                            <img src="{{ static_asset('assets/img/logo.png') }}" alt="{{ env('APP_NAME') }}" class="mw-100 h-30px h-md-40px" height="40">
+                            <img src="{{ static_asset('assets/img/logo.png') }}" alt="{{ env('APP_NAME') }}" class="mw-100 h-30px h-md-60px" height="60">
                         @endif
                     </a>
 
@@ -304,7 +304,7 @@
 
 @section('script')
     <script type="text/javascript">
-        
+
         function show_order_details(order_id)
         {
             $('#order-details-modal-body').html(null);
