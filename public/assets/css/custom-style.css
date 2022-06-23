@@ -16,10 +16,12 @@
     color:#5A6F43;
 }
 .product-category .cate_cell{
-    border: 1px solid #ccc;
+    border: 1px solid #f1f1f1;
     display: inline-block;
-    width: calc(16.66% - 10px);
+    width: calc(16.66% - 20px);
     border-radius: 5px;
+    margin-right: 10px;
+    margin-left: 10px;
 }
 
 .product-category ul.row{
