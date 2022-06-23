@@ -1,7 +1,7 @@
 @php
     $best_selling_products = Cache::remember('best_selling_products', 86400, function () {
         return filter_products(\App\Models\Product::where('published', 1)->orderBy('num_of_sale', 'desc'))->limit(20)->get();
-    });   
+    });
 @endphp
 
 @if (get_setting('best_selling') == 1)
@@ -9,8 +9,8 @@
         <div class="container">
             <div class="px-2 py-4 px-md-4 py-md-3 bg-white shadow-sm rounded">
                 <div class="d-flex mb-3 align-items-baseline border-bottom">
-                    <h3 class="h5 fw-700 mb-0">
-                        <span class="border-bottom border-primary border-width-2 pb-3 d-inline-block">{{ translate('Best Selling') }}</span>
+                    <h3 class="h5 fw-700 text-center mb-0">
+                        <span class="text-uppercase border-primary border-width-2 pb-3 d-inline-block"><img src="{{static_asset('img/best_selling.jpg')}}"/> {{ translate('Best Selling Products') }}</span>
                     </h3>
                     <a href="javascript:void(0)" class="ml-auto mr-0 btn btn-primary btn-sm shadow-md">{{ translate('Top 20') }}</a>
                 </div>
