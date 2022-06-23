@@ -59,8 +59,8 @@
     @if (count($featured_categories) > 0)
         <div class="container">
         <div class="product-category mb-4 pt-3">
-            <h2 class="h5 text-center  fw-700 mb-0">Our Product Categories
-                <a href="#" id="btn_see_all_category"><i class="fa fa-menu"></i> See All</a>
+            <h2 class="h5 text-center  fw-700 mb-0">{{ translate('Our Product Categories') }}
+                <a href="#" id="btn_see_all_category"><i class="fa fa-menu"></i> {{ translate('See All') }}</a>
             </h2>
         <ul class="list-unstyled  mb-0 row gutters-5">
             @foreach ($featured_categories as $key => $category)

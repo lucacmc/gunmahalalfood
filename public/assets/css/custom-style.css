@@ -33,6 +33,10 @@
     margin-right: 0;
 }
 
+.add_to_bag{
+    margin-top: 10px;
+}
+
 .product-flash-sale .product-cell{
     border: 1px solid #ccc;
     display: inline-block;

@@ -54,5 +54,10 @@
                 <span class="fw-700 float-right">{{ $product->earn_point }}</span>
             </div>
         @endif
+        <div class="add_to_bag">
+        <a href="javascript:void(0)" onclick="showAddToCartModal({{ $product->id }})">
+            <i class="las la-bolt"></i> {{ translate('Add to bag') }}
+        </a>
+        </div>
     </div>
 </div>
