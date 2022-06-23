@@ -89,7 +89,7 @@
         $flash_deal = \App\Models\FlashDeal::where('status', 1)->where('featured', 1)->first();
     @endphp
     @if($flash_deal != null && strtotime(date('Y-m-d H:i:s')) >= $flash_deal->start_date && strtotime(date('Y-m-d H:i:s')) <= $flash_deal->end_date)
-    <section class="mb-4">
+    <section id="section_flash_sale" class="mb-4">
         <div class="container">
             <div class="px-2 py-4 px-md-4 py-md-3 bg-white shadow-sm rounded">
 
@@ -122,7 +122,7 @@
         $num_todays_deal = count($todays_deal_products);
     @endphp
     @if($num_todays_deal > 0)
-        <section class="mb-4">
+        <section id="section_today_deal" class="mb-4">
             <div class="container">
                 <div class="px-2 py-4 px-md-4 py-md-3 bg-white shadow-sm rounded">
                     <div class="text-center text-uppercase mb-3 align-items-baseline border-bottom">

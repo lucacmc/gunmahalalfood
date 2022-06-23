@@ -90,3 +90,12 @@
     font-size: 16px;
 }
 
+#section_flash_sale .slick-slide,
+#section_today_deal .slick-slide,
+#section_newest .slick-slide,
+#section_newest .slick-slide,
+#slick-slide .slick-slide,
+#section_best_selling .slick-slide {
+    border-radius: 10px;
+    border: 1px solid #f1f1f1;
+}
