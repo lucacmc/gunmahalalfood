@@ -35,6 +35,12 @@
 
 .add_to_bag{
     margin-top: 10px;
+    text-align: center;
+    border: 1px solid transparent;
+}
+
+.add_to_bag:hover{
+    border: 1px solid var(--primary);
 }
 
 .product-flash-sale .product-cell{
