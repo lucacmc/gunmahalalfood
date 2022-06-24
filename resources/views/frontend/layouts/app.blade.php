@@ -495,16 +495,32 @@
                        else{
                             $('#addToCart-modal-body').html(null);
                             $('.c-preloader').hide();
-                            $('#modal-size').removeClass('modal-lg');
-                            $('#addToCart-modal-body').html(data.modal_view);
+                           $('#modal-size').removeClass('modal-lg');
+                           $('#addToCart-modal-body').html(data.modal_view);
                        }
                    }
-               });
-            }
-            else{
+                });
+            } else {
                 AIZ.plugins.notify('warning', "{{ translate('Please choose all the options') }}");
             }
         }
+
+        $(document).on("click", ".addToBagSubmit", function () {
+
+            var frmCart = $(this).parents('form');
+            frmCart.find('.form-preloader').show();
+            $.ajax({
+                type: "POST",
+                url: '{{ route('cart.addToCart') }}',
+                data: frmCart.serializeArray(),
+                success: function (data) {
+                    frmCart.find('.form-preloader').hide();
+                    AIZ.extra.plusMinus();
+                    AIZ.plugins.slickCarousel();
+                    updateNavCart(data.nav_cart_view, data.cart_count);
+                }
+            });
+        })
 
     </script>
 

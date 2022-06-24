@@ -58,24 +58,27 @@
 
     @if (count($featured_categories) > 0)
         <div class="container">
-        <div class="product-category mb-4 pt-3">
-            <h2 class="h5 text-center  fw-700 mb-0">{{ translate('Our Product Categories') }}
-                <a href="{{ route('categories.all') }}" id="btn_see_all_category"><i class="fa fa-menu"></i> {{ translate('See All') }}</a>
-            </h2>
-        <ul class="list-unstyled  mb-0 row gutters-5">
-            @foreach ($featured_categories as $key => $category)
-                <li class="minw-0 col-4 col-md mt-3 cate_cell rounded hov-shadow-md">
-                    <a href="{{ route('products.category', $category->slug) }}" class="d-block rounded bg-white p-2 text-reset shadow-sm">
-                        <img
-                            src="{{ static_asset('assets/img/placeholder.jpg') }}"
-                            data-src="{{ uploaded_asset($category->banner) }}"
-                            alt="{{ $category->getTranslation('name') }}"
-                            class="lazyload img-fit"
-                            height="100"
-                            onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder-rect.jpg') }}';"
-                        >
-                        <div class="text-center text-truncate fs-12 fw-600 mt-2 opacity-70 cate_name">{{ $category->getTranslation('name') }}</div>
-                    </a>
+            <div class="product-category mb-4 pb-3 pt-3">
+                <h2 class="h5 text-center  fw-700 mb-0">{{ translate('Our Product Categories') }}
+                    <a href="{{ route('categories.all') }}" id="btn_see_all_category"><i
+                            class="fa fa-menu"></i> {{ translate('See All') }}</a>
+                </h2>
+                <ul class="list-unstyled row gutters-10">
+                    @foreach ($featured_categories as $key => $category)
+                        <li class="col-6 col-sm-3 col-md-2 mt-3  cate_cell ">
+                            <a href="{{ route('products.category', $category->slug) }}"
+                               class="d-block rounded bg-white p-2 text-reset shadow-sm rounded hov-shadow-md">
+                                <img
+                                    src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                                    data-src="{{ uploaded_asset($category->banner) }}"
+                                    alt="{{ $category->getTranslation('name') }}"
+                                    class="lazyload img-fit"
+                                    height="100"
+                                    onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder-rect.jpg') }}';"
+                                >
+                                <div
+                                    class="text-center text-truncate fs-12 fw-600 mt-2 opacity-70 cate_name">{{ $category->getTranslation('name') }}</div>
+                            </a>
                 </li>
             @endforeach
         </ul>
@@ -89,26 +92,30 @@
         $flash_deal = \App\Models\FlashDeal::where('status', 1)->where('featured', 1)->first();
     @endphp
     @if($flash_deal != null && strtotime(date('Y-m-d H:i:s')) >= $flash_deal->start_date && strtotime(date('Y-m-d H:i:s')) <= $flash_deal->end_date)
-    <section id="section_flash_sale" class="mb-4">
-        <div class="container">
-            <div class="px-2 py-4 px-md-4 py-md-3 ">
+        <section id="section_flash_sale" class="mb-4">
+            <div class="container">
+                <div class="px-2 py-4 px-md-4 py-md-3 ">
 
-                <div class="d-flex text-center text-uppercase mb-3 align-items-baseline border-bottom head_flash">
-                    <h3 class="h5 fw-700 mb-0">
-                        <span class="border-bottom border-primary border-width-2 pb-3 d-inline-block">{{ translate('Flash Sale') }}</span>
-                    </h3>
-                    <div class="aiz-count-down ml-auto ml-lg-3 align-items-center" data-date="{{ date('Y/m/d H:i:s', $flash_deal->end_date) }}"></div>
-                    <a href="{{ route('flash-deal-details', $flash_deal->slug) }}" class="ml-auto mr-0 btn btn-primary btn-sm shadow-md w-100 w-md-auto">{{ translate('View More') }}</a>
-                </div>
+                    <div class="d-flex text-center text-uppercase mb-3 align-items-baseline border-bottom head_flash">
+                        <h3 class="h5 fw-700 mb-0">
+                            <span
+                                class="border-bottom border-primary border-width-2 pb-3 d-inline-block">{{ translate('Flash Sale') }}</span>
+                        </h3>
+                        <div class="aiz-count-down ml-auto ml-lg-3 align-items-center"
+                             data-date="{{ date('Y/m/d H:i:s', $flash_deal->end_date) }}"></div>
+                        <a href="{{ route('flash-deal-details', $flash_deal->slug) }}"
+                           class="ml-auto mr-0 btn btn-primary btn-sm shadow-md w-100 w-md-auto btn-viewall">{{ translate('View More') }}</a>
+                    </div>
 
-                <div class="aiz-carousel gutters-10 half-outside-arrow" data-items="6" data-xl-items="5" data-lg-items="4"  data-md-items="3" data-sm-items="2" data-xs-items="2" data-arrows='true'>
-                    @foreach ($flash_deal->flash_deal_products->take(20) as $key => $flash_deal_product)
-                        @php
-                            $product = \App\Models\Product::find($flash_deal_product->product_id);
-                        @endphp
-                        @if ($product != null && $product->published != 0)
-                            <div class="carousel-box">
-                                @include('frontend.partials.product_box_1',['product' => $product])
+                    <div class="aiz-carousel gutters-10 half-outside-arrow" data-items="6" data-xl-items="5"
+                         data-lg-items="4" data-md-items="3" data-sm-items="2" data-xs-items="2" data-arrows='true'>
+                        @foreach ($flash_deal->flash_deal_products->take(20) as $key => $flash_deal_product)
+                            @php
+                                $product = \App\Models\Product::find($flash_deal_product->product_id);
+                            @endphp
+                            @if ($product != null && $product->published != 0)
+                                <div class="carousel-box">
+                                    @include('frontend.partials.product_box_1',['product' => $product])
                             </div>
                         @endif
                     @endforeach
