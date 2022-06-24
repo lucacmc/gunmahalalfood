@@ -111,6 +111,10 @@
     left: 0;
 }
 
+.aiz-card-box {
+    position: relative;
+}
+
 #section_best_selling {
     position: relative;
 }
