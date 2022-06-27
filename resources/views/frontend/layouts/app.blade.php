@@ -336,7 +336,7 @@
         }
 
         function updateNavCart(view, count, summary) {
-            $('.cart-count').html(summary.total_items);
+            $('.cart-count').html(count);
             $('#cart_items').html(view);
         }
 

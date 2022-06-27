@@ -1,27 +1,23 @@
 @php
-if (auth()->user() != null) {
-    $user_id = Auth::user()->id;
-    $cart = \App\Models\Cart::where('user_id', $user_id)->get();
-} else {
-    $temp_user_id = Session()->get('temp_user_id');
-    if ($temp_user_id) {
-        $cart = \App\Models\Cart::where('temp_user_id', $temp_user_id)->get();
+    if (auth()->user() != null) {
+        $user_id = Auth::user()->id;
+        $cart = \App\Models\Cart::where('user_id', $user_id)->get();
+    } else {
+        $temp_user_id = Session()->get('temp_user_id');
+        if ($temp_user_id) {
+            $cart = \App\Models\Cart::where('temp_user_id', $temp_user_id)->get();
+        }
     }
-}
 
-$cartSummary = get_total_cart_item($cart);
+    $total_items = get_total_cart_item($cart);
 @endphp
 <a href="javascript:void(0)" class="d-flex align-items-center text-reset h-100" data-toggle="dropdown"
-    data-display="static">
+   data-display="static">
     <i class="la la-shopping-cart la-2x opacity-80"></i>
     <span class="flex-grow-1 ml-1">
-        @if (isset($cart) && count($cart) > 0)
-            <span class="badge badge-primary badge-inline badge-pill cart-count">
-                {{ $cartSummary['total_items'] }}
-            </span>
-        @else
-            <span class="badge badge-primary badge-inline badge-pill cart-count">0</span>
-        @endif
+       <span class="badge badge-primary badge-inline badge-pill cart-count">
+         {{ $total_items }}
+        </span>
         <span class="nav-box-text d-none d-xl-block opacity-70">{{ translate('Cart') }}</span>
     </span>
 </a>
@@ -45,11 +41,11 @@ $cartSummary = get_total_cart_item($cart);
                     <li class="list-group-item">
                         <span class="d-flex align-items-center">
                             <a href="{{ route('product', $product->slug) }}"
-                                class="text-reset d-flex align-items-center flex-grow-1">
+                               class="text-reset d-flex align-items-center flex-grow-1">
                                 <img src="{{ static_asset('assets/img/placeholder.jpg') }}"
-                                    data-src="{{ uploaded_asset($product->thumbnail_img) }}"
-                                    class="img-fit lazyload size-60px rounded"
-                                    alt="{{ $product->getTranslation('name') }}">
+                                     data-src="{{ uploaded_asset($product->thumbnail_img) }}"
+                                     class="img-fit lazyload size-60px rounded"
+                                     alt="{{ $product->getTranslation('name') }}">
                                 <span class="minw-0 pl-2 flex-grow-1">
                                     <span class="fw-600 mb-1 text-truncate-2">
                                         {{ $product->getTranslation('name') }}
@@ -62,7 +58,7 @@ $cartSummary = get_total_cart_item($cart);
                             </a>
                             <span class="">
                                 <button onclick="removeFromCart({{ $cartItem['id'] }})"
-                                    class="btn btn-sm btn-icon stop-propagation">
+                                        class="btn btn-sm btn-icon stop-propagation">
                                     <i class="la la-close"></i>
                                 </button>
                             </span>

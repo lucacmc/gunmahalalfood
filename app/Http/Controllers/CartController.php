@@ -80,7 +80,7 @@ class CartController extends Controller
             if($product->digital != 1 && $request->quantity < $product->min_qty) {
                 return array(
                     'status' => 0,
-                    'cart_count' => count($carts),
+                    'cart_count' => get_total_cart_item($carts),
                     'cart_summary' => $this->getCartTotal($request),
                     'modal_view' => view('frontend.partials.minQtyNotSatisfied', ['min_qty' => $product->min_qty])->render(),
                     'nav_cart_view' => view('frontend.partials.cart')->render(),
@@ -121,7 +121,7 @@ class CartController extends Controller
             if($quantity < $request['quantity']){
                 return array(
                     'status' => 0,
-                    'cart_count' => count($carts),
+                    'cart_count' => get_total_cart_item($carts),
                     'cart_summary' => $this->getCartTotal($request),
                     'modal_view' => view('frontend.partials.outOfStockCart')->render(),
                     'nav_cart_view' => view('frontend.partials.cart')->render(),
@@ -183,7 +183,7 @@ class CartController extends Controller
                     if($cart_product->auction_product == 1){
                         return array(
                             'status' => 0,
-                            'cart_count' => count($carts),
+                            'cart_count' => get_total_cart_item($carts),
                             'cart_summary' => $this->getCartTotal($request),
                             'modal_view' => view('frontend.partials.auctionProductAlredayAddedCart')->render(),
                             'nav_cart_view' => view('frontend.partials.cart')->render(),
@@ -196,7 +196,7 @@ class CartController extends Controller
                         if($quantity < $cartItem['quantity'] + $request['quantity']){
                             return array(
                                 'status' => 0,
-                                'cart_count' => count($carts),
+                                'cart_count' => get_total_cart_item($carts),
                                 'cart_summary' => $this->getCartTotal($request),
                                 'modal_view' => view('frontend.partials.outOfStockCart')->render(),
                                 'nav_cart_view' => view('frontend.partials.cart')->render(),
@@ -238,7 +238,7 @@ class CartController extends Controller
 
             return array(
                 'status' => 1,
-                'cart_count' => count($carts),
+                'cart_count' => get_total_cart_item($carts),
                 'cart_summary' => $this->getCartTotal($request),
                 'modal_view' => view('frontend.partials.addedToCart', compact('product', 'data'))->render(),
                 'nav_cart_view' => view('frontend.partials.cart')->render(),
@@ -276,7 +276,7 @@ class CartController extends Controller
             }
             return array(
                 'status' => 1,
-                'cart_count' => count($carts),
+                'cart_count' => get_total_cart_item($carts),
                 'cart_summary' => $this->getCartTotal($request),
                 'modal_view' => view('frontend.partials.addedToCart', compact('product', 'data'))->render(),
                 'nav_cart_view' => view('frontend.partials.cart')->render(),
@@ -330,7 +330,7 @@ class CartController extends Controller
         }
 
         return array(
-            'cart_count' => count($carts),
+            'cart_count' => get_total_cart_item($carts),
             'cart_summary' => $this->getCartTotal($request),
             'cart_view' => view('frontend.partials.cart_details', compact('carts'))->render(),
             'nav_cart_view' => view('frontend.partials.cart')->render(),
@@ -394,7 +394,7 @@ class CartController extends Controller
         }
 
         return array(
-            'cart_count' => count($carts),
+            'cart_count' => get_total_cart_item($carts),
             'cart_summary' => $this->getCartTotal($request),
             'cart_view' => view('frontend.partials.cart_details', compact('carts'))->render(),
             'nav_cart_view' => view('frontend.partials.cart')->render(),
