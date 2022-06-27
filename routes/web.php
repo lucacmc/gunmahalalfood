@@ -56,6 +56,10 @@ use App\Http\Controllers\WishlistController;
   | contains the "web" middleware group. Now create something great!
   |
  */
+Route::get('/clear-cache', function () {
+    Artisan::call('cache:clear');
+    return "Cache is cleared";
+});
 
 Route::controller(DemoController::class)->group(function () {
     Route::get('/demo/cron_1', 'cron_1');
@@ -192,7 +196,7 @@ Route::controller(MercadopagoController::class)->group(function () {
     Route::any('/mercadopago/payment/done', 'paymentstatus')->name('mercadopago.done');
     Route::any('/mercadopago/payment/cancel', 'callback')->name('mercadopago.cancel');
 });
-//Mercadopago 
+//Mercadopago
 
 // SSLCOMMERZ Start
 Route::controller(SslcommerzController::class)->group(function () {
@@ -233,7 +237,7 @@ Route::group(['middleware' => ['user', 'verified', 'unbanned']], function() {
         Route::post('/new-user-email', 'update_email')->name('user.change.email');
         Route::post('/user/update-profile', 'userProfileUpdate')->name('user.profile.update');
     });
-    
+
     Route::get('/all-notifications', [NotificationController::class, 'index'])->name('all-notifications');
 
 });
@@ -254,7 +258,7 @@ Route::group(['middleware' => ['customer', 'verified', 'unbanned']], function() 
             Route::post('/remove_coupon_code', 'remove_coupon_code')->name('checkout.remove_coupon_code');
             //Club point
             Route::post('/apply-club-point', 'apply_club_point')->name('checkout.apply_club_point');
-            Route::post('/remove-club-point', 'remove_club_point')->name('checkout.remove_club_point'); 
+            Route::post('/remove-club-point', 'remove_club_point')->name('checkout.remove_club_point');
         });
     });
 
@@ -303,12 +307,12 @@ Route::group(['middleware' => ['customer', 'verified', 'unbanned']], function() 
 });
 
 Route::group(['middleware' => ['auth']], function() {
-    
+
     Route::get('invoice/{order_id}', [InvoiceController::class, 'invoice_download'])->name('invoice.download');
 
     // Reviews
     Route::resource('/reviews', ReviewController::class);
-    
+
     // Product Query
     Route::resource('conversations', ConversationController::class);
     Route::controller(ConversationController::class)->group(function () {
