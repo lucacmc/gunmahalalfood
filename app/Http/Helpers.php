@@ -1153,17 +1153,14 @@ if (!function_exists('get_url_params')) {
 
 // Get URL params
 if (!function_exists('get_total_cart_item')) {
-    function get_total_cart_item($cart)
+    function get_total_cart_item($carts)
     {
         $total_items = 0;
-        $total = 0;
         if (!empty($carts)) {
             foreach ($carts as $key => $cartItem) {
-                $product = \App\Models\Product::find($cartItem['product_id']);
-                $total = $total + cart_product_price($cartItem, $product, false) * $cartItem['quantity'];
                 $total_items += $cartItem['quantity'];
             }
         }
-        return array('total_items' => $total_items, 'total_price' => $total);
+        return $total_items;
     }
 }
