@@ -9,6 +9,7 @@ if (auth()->user() != null) {
     }
 }
 
+$cartSummary = get_total_cart_item($cart);
 @endphp
 <a href="javascript:void(0)" class="d-flex align-items-center text-reset h-100" data-toggle="dropdown"
     data-display="static">
@@ -16,7 +17,7 @@ if (auth()->user() != null) {
     <span class="flex-grow-1 ml-1">
         @if (isset($cart) && count($cart) > 0)
             <span class="badge badge-primary badge-inline badge-pill cart-count">
-                {{ count($cart) }}
+                {{ $cartSummary['total_items'] }}
             </span>
         @else
             <span class="badge badge-primary badge-inline badge-pill cart-count">0</span>

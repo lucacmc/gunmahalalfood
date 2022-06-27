@@ -321,8 +321,8 @@
                 _token: AIZ.data.csrf,
                 id: key,
                 quantity: element.value
-            }, function(data) {
-                updateNavCart(data.nav_cart_view, data.cart_count);
+            }, function (data) {
+                updateNavCart(data.nav_cart_view, data.cart_count, data.cart_summary);
                 $('#cart-summary').html(data.cart_view);
             });
         }
