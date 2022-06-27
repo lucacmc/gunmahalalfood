@@ -68,9 +68,9 @@
                         <i class="las la-bolt"></i> {{ translate('Add to bag') }}
                     </a>
                 @else
-                    <button type="button" class="btn btn-secondary out-of-stock fw-600" disabled>
+                    <a href="javascript:void(0)" class="btn btn-secondary out-of-stock fw-600" disabled>
                         <i class="la la-cart-arrow-down"></i>{{ translate('Out of Stock')}}
-                    </button>
+                    </a>
                 @endif
                 @csrf
                 <input type="hidden" name="id" value="{{ $product->id }}">
