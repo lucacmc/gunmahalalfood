@@ -57,6 +57,8 @@ use App\Http\Controllers\WishlistController;
   |
  */
 Route::get('/clear-cache', function () {
+    Artisan::call('config:clear');
+    Artisan::call('view:clear');
     Artisan::call('cache:clear');
     return "Cache is cleared";
 });
