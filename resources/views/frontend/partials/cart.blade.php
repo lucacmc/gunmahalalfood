@@ -8,8 +8,12 @@
             $cart = \App\Models\Cart::where('temp_user_id', $temp_user_id)->get();
         }
     }
+    if($cart){
+         $total_items = get_total_cart_item($cart);
+    }else{
+        $total_items = 0;
+    }
 
-    $total_items = get_total_cart_item($cart);
 @endphp
 <a href="javascript:void(0)" class="d-flex align-items-center text-reset h-100" data-toggle="dropdown"
    data-display="static">
