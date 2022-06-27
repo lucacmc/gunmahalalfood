@@ -51,7 +51,7 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
-        
+
         $product = Product::find($request->id);
         $carts = array();
         $data = array();
@@ -81,7 +81,8 @@ class CartController extends Controller
                 return array(
                     'status' => 0,
                     'cart_count' => count($carts),
-                    'modal_view' => view('frontend.partials.minQtyNotSatisfied', [ 'min_qty' => $product->min_qty ])->render(),
+                    'cart_summary' => $this->getCartTotal($request),
+                    'modal_view' => view('frontend.partials.minQtyNotSatisfied', ['min_qty' => $product->min_qty])->render(),
                     'nav_cart_view' => view('frontend.partials.cart')->render(),
                 );
             }
@@ -121,6 +122,7 @@ class CartController extends Controller
                 return array(
                     'status' => 0,
                     'cart_count' => count($carts),
+                    'cart_summary' => $this->getCartTotal($request),
                     'modal_view' => view('frontend.partials.outOfStockCart')->render(),
                     'nav_cart_view' => view('frontend.partials.cart')->render(),
                 );
@@ -172,7 +174,7 @@ class CartController extends Controller
             if(Cookie::has('referred_product_id') && Cookie::get('referred_product_id') == $product->id) {
                 $data['product_referral_code'] = Cookie::get('product_referral_code');
             }
-
+            $total_item = 0;
             if($carts && count($carts) > 0){
                 $foundInCart = false;
 
@@ -182,6 +184,7 @@ class CartController extends Controller
                         return array(
                             'status' => 0,
                             'cart_count' => count($carts),
+                            'cart_summary' => $this->getCartTotal($request),
                             'modal_view' => view('frontend.partials.auctionProductAlredayAddedCart')->render(),
                             'nav_cart_view' => view('frontend.partials.cart')->render(),
                         );
@@ -194,6 +197,7 @@ class CartController extends Controller
                             return array(
                                 'status' => 0,
                                 'cart_count' => count($carts),
+                                'cart_summary' => $this->getCartTotal($request),
                                 'modal_view' => view('frontend.partials.outOfStockCart')->render(),
                                 'nav_cart_view' => view('frontend.partials.cart')->render(),
                             );
@@ -231,10 +235,11 @@ class CartController extends Controller
                 $temp_user_id = $request->session()->get('temp_user_id');
                 $carts = Cart::where('temp_user_id', $temp_user_id)->get();
             }
-			
+
             return array(
                 'status' => 1,
                 'cart_count' => count($carts),
+                'cart_summary' => $this->getCartTotal($request),
                 'modal_view' => view('frontend.partials.addedToCart', compact('product', 'data'))->render(),
                 'nav_cart_view' => view('frontend.partials.cart')->render(),
             );
@@ -272,17 +277,51 @@ class CartController extends Controller
             return array(
                 'status' => 1,
                 'cart_count' => count($carts),
+                'cart_summary' => $this->getCartTotal($request),
                 'modal_view' => view('frontend.partials.addedToCart', compact('product', 'data'))->render(),
                 'nav_cart_view' => view('frontend.partials.cart')->render(),
             );
         }
     }
 
+    public function getCartTotal(Request $request)
+    {
+        $carts = array();
+        $data = array();
+
+        if (auth()->user() != null) {
+            $user_id = Auth::user()->id;
+            $data['user_id'] = $user_id;
+            $carts = Cart::where('user_id', $user_id)->get();
+        } else {
+            if ($request->session()->get('temp_user_id')) {
+                $temp_user_id = $request->session()->get('temp_user_id');
+            } else {
+                $temp_user_id = bin2hex(random_bytes(10));
+                $request->session()->put('temp_user_id', $temp_user_id);
+            }
+            $data['temp_user_id'] = $temp_user_id;
+            $carts = Cart::where('temp_user_id', $temp_user_id)->get();
+        }
+        $total_items = 0;
+        $total = 0;
+
+
+        if (!empty($carts)) {
+            foreach ($carts as $key => $cartItem) {
+                $product = \App\Models\Product::find($cartItem['product_id']);
+                $total = $total + cart_product_price($cartItem, $product, false) * $cartItem['quantity'];
+                $total_items += $cartItem['quantity'];
+            }
+        }
+        return array('total_items' => $total_items, 'total_price' => $total);
+    }
+
     //removes from Cart
     public function removeFromCart(Request $request)
     {
         Cart::destroy($request->id);
-        if(auth()->user() != null) {
+        if (auth()->user() != null) {
             $user_id = Auth::user()->id;
             $carts = Cart::where('user_id', $user_id)->get();
         } else {
@@ -292,6 +331,7 @@ class CartController extends Controller
 
         return array(
             'cart_count' => count($carts),
+            'cart_summary' => $this->getCartTotal($request),
             'cart_view' => view('frontend.partials.cart_details', compact('carts'))->render(),
             'nav_cart_view' => view('frontend.partials.cart')->render(),
         );
@@ -307,8 +347,8 @@ class CartController extends Controller
             $product_stock = $product->stocks->where('variant', $cartItem['variation'])->first();
             $quantity = $product_stock->qty;
             $price = $product_stock->price;
-			
-			//discount calculation
+
+            //discount calculation
             $discount_applicable = false;
 
             if ($product->discount_start_date == null) {
@@ -355,6 +395,7 @@ class CartController extends Controller
 
         return array(
             'cart_count' => count($carts),
+            'cart_summary' => $this->getCartTotal($request),
             'cart_view' => view('frontend.partials.cart_details', compact('carts'))->render(),
             'nav_cart_view' => view('frontend.partials.cart')->render(),
         );
