@@ -65,7 +65,8 @@
             <form class="add-to-bag-form">
                 @if($qty >0)
                     <a href="javascript:void(0)" class="addToBagSubmit">
-                        <i class="las la-bolt"></i> {{ translate('Add to bag') }}
+                        <i class="las la-bolt"></i><i class="las la-spinner la-spin"
+                                                      style="display: none;"></i> {{ translate('Add to bag') }}
                     </a>
                 @else
                     <a href="javascript:void(0)" class="btn btn-secondary out-of-stock fw-600" disabled>
@@ -169,9 +170,6 @@
                     </div>
 
                 @endif
-                <div class="form-preloader text-center p-3" style="display: none;">
-                    <i class="las la-spinner la-spin la-3x"></i>
-                </div>
             </form>
         </div>
     </div>

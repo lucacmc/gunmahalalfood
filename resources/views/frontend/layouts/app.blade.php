@@ -506,13 +506,15 @@
         $(document).on("click", ".addToBagSubmit", function () {
 
             var frmCart = $(this).parents('form');
-            frmCart.find('.form-preloader').show();
+            frmCart.find('.la-spinner').show();
+            frmCart.find('.la-bolt').hide();
             $.ajax({
                 type: "POST",
                 url: '{{ route('cart.addToCart') }}',
                 data: frmCart.serializeArray(),
                 success: function (data) {
-                    frmCart.find('.form-preloader').hide();
+                    frmCart.find('.la-spinner').hide();
+                    frmCart.find('.la-bolt').show();
                     AIZ.extra.plusMinus();
                     AIZ.plugins.slickCarousel();
                     updateNavCart(data.nav_cart_view, data.cart_count, data.cart_summary);
