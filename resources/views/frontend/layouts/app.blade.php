@@ -511,7 +511,7 @@
             $.ajax({
                 type: "POST",
                 url: '{{ route('cart.addToCart') }}',
-                data: frmCart.serializeArray(),
+                data: frmCart.find('form').serializeArray(),
                 success: function (data) {
                     frmCart.find('.la-spinner').hide();
                     frmCart.find('.la-bolt').show();
