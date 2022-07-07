@@ -505,7 +505,7 @@
 
         $(document).on("click", ".addToBagSubmit", function () {
 
-            var frmCart = $(this).parents('form');
+            var frmCart = $(this).parents('.add_to_bag');
             frmCart.find('.la-spinner').show();
             frmCart.find('.la-bolt').hide();
             $.ajax({

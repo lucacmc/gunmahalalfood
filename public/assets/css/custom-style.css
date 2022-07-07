@@ -159,6 +159,10 @@
     display: block;
 }
 
+#rightCart.cartOpen .h-250px {
+    height: calc(100% - 50px);
+}
+
 #rightCart.cartOpen .close_button {
     display: block;
     position: absolute;
