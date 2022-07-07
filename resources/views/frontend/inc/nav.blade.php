@@ -1,5 +1,5 @@
 @if(get_setting('topbar_banner') != null)
-<div class="position-relative top-banner removable-session z-1035 d-none" data-key="top-banner" data-value="removed">
+<div class="position-relative top-banner removable-session z-1000 d-none" data-key="top-banner" data-value="removed">
     <a href="{{ get_setting('topbar_banner_link') }}" class="d-block text-reset">
         <img src="{{ uploaded_asset(get_setting('topbar_banner')) }}" class="w-100 mw-100 h-50px h-lg-auto img-fit">
     </a>
@@ -9,7 +9,7 @@
 </div>
 @endif
 <!-- Top Bar -->
-<div class="top-navbar bg-white border-bottom border-soft-secondary z-1035">
+<div class="top-navbar bg-white border-bottom border-soft-secondary z-1000">
     <div class="container">
         <div class="row">
             <div class="col-lg-7 col">
