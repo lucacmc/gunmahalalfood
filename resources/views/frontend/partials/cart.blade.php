@@ -1,4 +1,5 @@
 @php
+    $total = 0;
     if (auth()->user() != null) {
         $user_id = Auth::user()->id;
         $cart = \App\Models\Cart::where('user_id', $user_id)->get();
@@ -98,4 +99,11 @@
         </div>
     @endif
 
+</div>
+<div id="rightCart">
+    <div class="cart_label">
+        <i class="la la-shopping-bag la-3x"></i>
+        <div><span id="cart_item_number">{{$total_items}}</span> ITEMS</div>
+    </div>
+    <div class="cart_price"><span id="cart_total_money">{{ single_price($total) }}</span></div>
 </div>

@@ -522,6 +522,10 @@
             });
         })
 
+        $(document).on('click','#rightCart',function (){
+            $(this).toggleClass('cartOpen');
+        });
+
     </script>
 
     @yield('script')
@@ -529,6 +533,5 @@
     @php
         echo get_setting('footer_script');
     @endphp
-
 </body>
 </html>

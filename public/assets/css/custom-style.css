@@ -119,6 +119,36 @@
     position: relative;
 }
 
+#rightCart{
+    position: fixed;
+    right: 0;
+    top: 50%;
+    margin-top: -50px;
+    width: 80px;
+    height: 100px;
+    background: #fff;
+    cursor: pointer;
+    box-sizing: border-box;
+    box-shadow: -2px 0 12px 0 rgb(143 143 143 / 38%);
+    border: 1px solid #f1f1f1;
+    border-radius: 3px;
+}
+#rightCart .cart_label{
+    padding: 5px 5px;
+    text-align: center;
+    background: #55584d;
+    color:#fdd670;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.cart_price{
+    font-size: 13px;
+    padding: 5px 5px;
+    font-weight: bold;
+    text-align: center;
+}
+
 @media only screen and (max-width: 900px) {
 
 }
