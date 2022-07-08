@@ -51,6 +51,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+
         $category = new Category;
         $category->name = $request->name;
         $category->order_level = 0;
@@ -59,6 +60,7 @@ class CategoryController extends Controller
         }
         $category->digital = $request->digital;
         $category->banner = $request->banner;
+        $category->banner_url = $request->banner_url;
         $category->icon = $request->icon;
         $category->meta_title = $request->meta_title;
         $category->meta_description = $request->meta_description;
@@ -140,6 +142,7 @@ class CategoryController extends Controller
         }
         $category->digital = $request->digital;
         $category->banner = $request->banner;
+        $category->banner_url = $request->banner_url;
         $category->icon = $request->icon;
         $category->meta_title = $request->meta_title;
         $category->meta_description = $request->meta_description;

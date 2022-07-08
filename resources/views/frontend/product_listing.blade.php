@@ -189,11 +189,22 @@
                             $category_banner = $category->banner;
                         @endphp
                         @if($category_banner)
+
                             <div class="category-banner-wrap text-center mb-3">
-                                <img
-                                    src="{{ uploaded_asset($category->banner) }}"
-                                    data-src="{{ uploaded_asset($category->banner) }}"
-                                    alt="{{ $category->getTranslation('name') }}"/>
+                                @if($category->banner_url)
+                                    <a href="{{$category->banner_url}}" target="_blank">
+                                        <img
+                                            src="{{ uploaded_asset($category->banner) }}"
+                                            data-src="{{ uploaded_asset($category->banner) }}"
+                                            alt="{{ $category->getTranslation('name') }}"/>
+                                    </a>
+                                @else
+                                    <img
+                                        src="{{ uploaded_asset($category->banner) }}"
+                                        data-src="{{ uploaded_asset($category->banner) }}"
+                                        alt="{{ $category->getTranslation('name') }}"/>
+                                @endif
+
                             </div>
                         @endif
                         <ul class="breadcrumb bg-transparent p-0">
