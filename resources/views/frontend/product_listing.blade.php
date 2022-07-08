@@ -60,7 +60,7 @@
                                     <div class="p-3">
                                         <ul class="list-unstyled">
                                             @foreach (\App\Models\Category::where('level', 0)->get() as $category)
-                                                <li class="mb-2 ml-2">
+                                                <li class="mb-2 ml-2 @if($category_id == $category->id ) current_category @endif">
                                                     <a class="text-reset fs-14 category-item"
                                                        href="{{ route('products.category', $category->slug) }}">
                                                         <img
@@ -73,11 +73,14 @@
                                                         >
                                                         {{ $category->getTranslation('name') }}</a>
                                                     @if (isset($category_id) && $category_id == $category->id)
-                                                        <ul class="sub-cat-menu">
+                                                        <ul class="list-unstyled">
                                                             @foreach (\App\Utility\CategoryUtility::get_immediate_children_ids($category_id) as $key => $id)
                                                                 <li class="ml-4 mb-2">
                                                                     <a class="text-reset fs-14"
-                                                                       href="{{ route('products.category', \App\Models\Category::find($id)->slug) }}">{{ \App\Models\Category::find($id)->getTranslation('name') }}</a>
+                                                                       href="{{ route('products.category', \App\Models\Category::find($id)->slug) }}">
+                                                                        <i class="la la-caret-right"></i>
+                                                                        {{ \App\Models\Category::find($id)->getTranslation('name') }}
+                                                                    </a>
                                                                 </li>
                                                             @endforeach
                                                         </ul>
@@ -261,16 +264,48 @@
                                 <div class="col-6 col-lg-auto mb-3 w-lg-200px">
                                     <label class="mb-0 opacity-50">{{ translate('Sort by')}}</label>
                                     <select class="form-control form-control-sm aiz-selectpicker" name="sort_by" onchange="filter()">
-                                        <option value="newest" @isset($sort_by) @if ($sort_by == 'newest') selected @endif @endisset>{{ translate('Newest')}}</option>
-                                        <option value="oldest" @isset($sort_by) @if ($sort_by == 'oldest') selected @endif @endisset>{{ translate('Oldest')}}</option>
-                                        <option value="price-asc" @isset($sort_by) @if ($sort_by == 'price-asc') selected @endif @endisset>{{ translate('Price low to high')}}</option>
-                                        <option value="price-desc" @isset($sort_by) @if ($sort_by == 'price-desc') selected @endif @endisset>{{ translate('Price high to low')}}</option>
+                                        <option value="newest"
+                                                @isset($sort_by) @if ($sort_by == 'newest') selected @endif @endisset>{{ translate('Newest')}}</option>
+                                        <option value="oldest"
+                                                @isset($sort_by) @if ($sort_by == 'oldest') selected @endif @endisset>{{ translate('Oldest')}}</option>
+                                        <option value="price-asc"
+                                                @isset($sort_by) @if ($sort_by == 'price-asc') selected @endif @endisset>{{ translate('Price low to high')}}</option>
+                                        <option value="price-desc"
+                                                @isset($sort_by) @if ($sort_by == 'price-desc') selected @endif @endisset>{{ translate('Price high to low')}}</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <input type="hidden" name="min_price" value="">
                         <input type="hidden" name="max_price" value="">
+                        @if (isset($category_id))
+                            @php
+                                $sub_cates = \App\Utility\CategoryUtility::get_immediate_children($category_id);
+                            @endphp
+                            @if($sub_cates)
+                                <div class="product-category mb-4 pb-3 pt-3">
+                                    <ul class="list-unstyled row gutters-10">
+                                        @foreach ($sub_cates as $key => $sub)
+                                            <li class="col-6 col-sm-3 col-md-2 mt-2">
+                                                <a href="{{ route('products.category', $sub->slug) }}"
+                                                   class="d-block rounded bg-white p-2 text-reset shadow-sm rounded hov-shadow-md text-center">
+                                                    <img
+                                                        src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                                                        data-src="{{ uploaded_asset($sub->icon) }}"
+                                                        alt="{{ $sub->getTranslation('name') }}"
+                                                        class="lazyload category_icon"
+                                                        height="70"
+                                                        onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder-rect.jpg') }}';"
+                                                    />
+                                                    <div
+                                                        class="text-center text-truncate fs-12 fw-600 mt-2 opacity-70 cate_name">{{ $sub->getTranslation('name') }}</div>
+                                                </a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                        @endif
                         <div class="row gutters-5 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-4 row-cols-md-3 row-cols-2">
                             @foreach ($products as $key => $product)
                                 <div class="col">
