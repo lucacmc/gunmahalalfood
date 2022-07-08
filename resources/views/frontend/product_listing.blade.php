@@ -184,14 +184,26 @@
                         </div>
                     </div>
                     <div class="col-xl-9">
-
+                        @php
+                            $category = \App\Models\Category::find($category_id);
+                            $category_banner = $category->banner;
+                        @endphp
+                        @if($category_banner)
+                            <div class="category-banner-wrap text-center mb-3">
+                                <img
+                                    src="{{ uploaded_asset($category->banner) }}"
+                                    data-src="{{ uploaded_asset($category->banner) }}"
+                                    alt="{{ $category->getTranslation('name') }}"/>
+                            </div>
+                        @endif
                         <ul class="breadcrumb bg-transparent p-0">
                             <li class="breadcrumb-item opacity-50">
                                 <a class="text-reset" href="{{ route('home') }}">{{ translate('Home')}}</a>
                             </li>
                             @if(!isset($category_id))
                                 <li class="breadcrumb-item fw-600  text-dark">
-                                    <a class="text-reset" href="{{ route('search') }}">"{{ translate('All Categories')}}"</a>
+                                    <a class="text-reset" href="{{ route('search') }}">"{{ translate('All Categories')}}
+                                        "</a>
                                 </li>
                             @else
                                 <li class="breadcrumb-item opacity-50">

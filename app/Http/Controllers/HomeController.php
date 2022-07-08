@@ -42,7 +42,7 @@ class HomeController extends Controller
         });
 
         $todays_deal_products = Cache::rememberForever('todays_deal_products', function () {
-            return filter_products(Product::where('published', 1)->where('todays_deal', '1'))->get();            
+            return filter_products(Product::where('published', 1)->where('todays_deal', '1'))->get();
         });
 
         $newest_products = Cache::remember('newest_products', 3600, function () {
@@ -94,7 +94,7 @@ class HomeController extends Controller
         elseif($request->get('email') != null){
             $user = User::whereIn('user_type', ['customer', 'seller'])->where('email', $request->email)->first();
         }
-        
+
         if($user != null){
             if(Hash::check($request->password, $user->password)){
                 if($request->has('remember')){
@@ -176,7 +176,7 @@ class HomeController extends Controller
         if($request->new_password != null && ($request->new_password == $request->confirm_password)){
             $user->password = Hash::make($request->new_password);
         }
-        
+
         $user->avatar_original = $request->photo;
         $user->save();
 
@@ -286,7 +286,7 @@ class HomeController extends Controller
         $categories = Category::where('level', 0)->orderBy('order_level', 'desc')->get();
         return view('frontend.all_category', compact('categories'));
     }
-    
+
     public function all_brands(Request $request)
     {
         $categories = Category::all();
@@ -350,9 +350,9 @@ class HomeController extends Controller
         }
 
         $product_stock = $product->stocks->where('variant', $str)->first();
-        
+
         $price = $product_stock->price;
-        
+
 
         if($product->wholesale_product){
             $wholesalePrice = $product_stock->wholesalePrices->where('min_qty', '<=', $request->quantity)->where('max_qty', '>=', $request->quantity)->first();
