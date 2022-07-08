@@ -47,7 +47,8 @@
                             <div class="collapse-sidebar c-scrollbar-light text-left">
                                 <div class="d-flex d-xl-none justify-content-between align-items-center pl-3 border-bottom">
                                     <h3 class="h6 mb-0 fw-600">{{ translate('Filters') }}</h3>
-                                    <button type="button" class="btn btn-sm p-2 filter-sidebar-thumb" data-toggle="class-toggle" data-target=".aiz-filter-sidebar" type="button">
+                                    <button type="button" class="btn btn-sm p-2 filter-sidebar-thumb"
+                                            data-toggle="class-toggle" data-target=".aiz-filter-sidebar" type="button">
                                         <i class="las la-times la-2x"></i>
                                     </button>
                                 </div>
@@ -56,16 +57,50 @@
                                         {{ translate('Categories')}}
                                     </div>
                                     <div class="p-3">
+                                        <section class="mb-4">
+                                            <div class="container">
+                                                @foreach ($categories as $key => $category)
+                                                    <div class="mb-3 bg-white shadow-sm rounded">
+                                                        <div class="p-3 border-bottom fs-16 fw-600">
+                                                            <a href="{{ route('products.category', $category->slug) }}"
+                                                               class="text-reset">{{  $category->getTranslation('name') }}</a>
+                                                        </div>
+                                                        <div class="p-3 p-lg-4">
+                                                            <div class="row">
+                                                                @foreach (\App\Utility\CategoryUtility::get_immediate_children_ids($category->id) as $key => $first_level_id)
+                                                                    <div class="col-lg-4 col-6 text-left">
+                                                                        <h6 class="mb-3"><a
+                                                                                class="text-reset fw-600 fs-14"
+                                                                                href="{{ route('products.category', \App\Models\Category::find($first_level_id)->slug) }}">{{ \App\Models\Category::find($first_level_id)->getTranslation('name') }}</a>
+                                                                        </h6>
+                                                                        <ul class="mb-3 list-unstyled pl-2">
+                                                                            @foreach (\App\Utility\CategoryUtility::get_immediate_children_ids($first_level_id) as $key => $second_level_id)
+                                                                                <li class="mb-2">
+                                                                                    <a class="text-reset"
+                                                                                       href="{{ route('products.category', \App\Models\Category::find($second_level_id)->slug) }}">{{ \App\Models\Category::find($second_level_id)->getTranslation('name') }}</a>
+                                                                                </li>
+                                                                            @endforeach
+                                                                        </ul>
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </section>
                                         <ul class="list-unstyled">
                                             @if (!isset($category_id))
                                                 @foreach (\App\Models\Category::where('level', 0)->get() as $category)
                                                     <li class="mb-2 ml-2">
-                                                        <a class="text-reset fs-14" href="{{ route('customer_products.category', $category->slug) }}">{{ $category->getTranslation('name') }}</a>
+                                                        <a class="text-reset fs-14"
+                                                           href="{{ route('customer_products.category', $category->slug) }}">{{ $category->getTranslation('name') }}</a>
                                                     </li>
                                                 @endforeach
                                             @else
                                                 <li class="mb-2">
-                                                    <a class="text-reset fs-14 fw-600" href="{{ route('customer.products') }}">
+                                                    <a class="text-reset fs-14 fw-600"
+                                                       href="{{ route('customer.products') }}">
                                                         <i class="las la-angle-left"></i>
                                                         {{ translate('All Categories')}}
                                                     </a>

@@ -70,17 +70,17 @@
                                class="d-block rounded bg-white p-2 text-reset shadow-sm rounded hov-shadow-md">
                                 <img
                                     src="{{ static_asset('assets/img/placeholder.jpg') }}"
-                                    data-src="{{ uploaded_asset($category->banner) }}"
+                                    data-src="{{ uploaded_asset($category->icon) }}"
                                     alt="{{ $category->getTranslation('name') }}"
                                     class="lazyload img-fit"
-                                    height="100"
+                                    height="50"
                                     onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder-rect.jpg') }}';"
                                 >
                                 <div
                                     class="text-center text-truncate fs-12 fw-600 mt-2 opacity-70 cate_name">{{ $category->getTranslation('name') }}</div>
                             </a>
-                </li>
-            @endforeach
+                        </li>
+                    @endforeach
         </ul>
         </div>
         </div>

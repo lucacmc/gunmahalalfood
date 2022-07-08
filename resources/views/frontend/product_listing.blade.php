@@ -42,26 +42,31 @@
                 <div class="row">
                     <div class="col-xl-3">
                         <div class="aiz-filter-sidebar collapse-sidebar-wrap sidebar-xl sidebar-right z-1035">
-                            <div class="overlay overlay-fixed dark c-pointer" data-toggle="class-toggle" data-target=".aiz-filter-sidebar" data-same=".filter-sidebar-thumb"></div>
+                            <div class="overlay overlay-fixed dark c-pointer" data-toggle="class-toggle"
+                                 data-target=".aiz-filter-sidebar" data-same=".filter-sidebar-thumb"></div>
                             <div class="collapse-sidebar c-scrollbar-light text-left">
-                                <div class="d-flex d-xl-none justify-content-between align-items-center pl-3 border-bottom">
+                                <div
+                                    class="d-flex d-xl-none justify-content-between align-items-center pl-3 border-bottom">
                                     <h3 class="h6 mb-0 fw-600">{{ translate('Filters') }}</h3>
-                                    <button type="button" class="btn btn-sm p-2 filter-sidebar-thumb" data-toggle="class-toggle" data-target=".aiz-filter-sidebar" >
+                                    <button type="button" class="btn btn-sm p-2 filter-sidebar-thumb"
+                                            data-toggle="class-toggle" data-target=".aiz-filter-sidebar">
                                         <i class="las la-times la-2x"></i>
                                     </button>
                                 </div>
                                 <div class="bg-white shadow-sm rounded mb-3">
                                     <div class="fs-15 fw-600 p-3 border-bottom">
-                                        {{ translate('Categories')}}
+                                        aaaa {{ translate('Categories')}}
                                     </div>
                                     <div class="p-3">
                                         <ul class="list-unstyled">
+                                            @foreach (\App\Models\Category::where('level', 0)->get() as $category)
+                                                <li class="mb-2 ml-2">
+                                                    <a class="text-reset fs-14"
+                                                       href="{{ route('products.category', $category->slug) }}">{{ $category->getTranslation('name') }}</a>
+                                                </li>
+                                            @endforeach
                                             @if (!isset($category_id))
-                                                @foreach (\App\Models\Category::where('level', 0)->get() as $category)
-                                                    <li class="mb-2 ml-2">
-                                                        <a class="text-reset fs-14" href="{{ route('products.category', $category->slug) }}">{{ $category->getTranslation('name') }}</a>
-                                                    </li>
-                                                @endforeach
+
                                             @else
                                                 <li class="mb-2">
                                                     <a class="text-reset fs-14 fw-600" href="{{ route('search') }}">
