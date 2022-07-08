@@ -38,7 +38,7 @@
 @section('content')
     <section class="mb-4 pt-3">
         <div class="container">
-            <div class="bg-white shadow-sm rounded p-3">
+            <div class="p-3">
                 <div class="row">
                     <div class="bg-white col-md-3 rounded shadow-sm">
                         <div class="fs-15 fw-600 p-3 border-bottom">
