@@ -72,7 +72,7 @@
                                                             onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder-rect.jpg') }}';"
                                                         >
                                                         {{ $category->getTranslation('name') }}</a>
-                                                    @if (isset($category_id))
+                                                    @if (isset($category_id) && $category_id == $category->id)
                                                         <ul class="sub-cat-menu">
                                                             @foreach (\App\Utility\CategoryUtility::get_immediate_children_ids($category_id) as $key => $id)
                                                                 <li class="ml-4 mb-2">
