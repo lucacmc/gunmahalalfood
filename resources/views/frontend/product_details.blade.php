@@ -209,7 +209,7 @@
                                                 <div class="carousel-box img-zoom rounded">
                                                     <img
                                                         class="img-fluid lazyload"
-                                                        src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                                                        src="{{ uploaded_asset($photo) }}"
                                                         data-src="{{ uploaded_asset($photo) }}"
                                                         onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';"
                                                     >
@@ -220,7 +220,7 @@
                                                     <div class="carousel-box img-zoom rounded">
                                                         <img
                                                             class="img-fluid lazyload"
-                                                            src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                                                            src="{{ uploaded_asset($stock->image) }}"
                                                             data-src="{{ uploaded_asset($stock->image) }}"
                                                             onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';"
                                                         >
