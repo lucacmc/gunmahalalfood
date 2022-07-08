@@ -67,13 +67,13 @@
                     @foreach ($featured_categories as $key => $category)
                         <li class="col-6 col-sm-3 col-md-2 mt-3  cate_cell ">
                             <a href="{{ route('products.category', $category->slug) }}"
-                               class="d-block rounded bg-white p-2 text-reset shadow-sm rounded hov-shadow-md">
+                               class="d-block rounded bg-white p-2 text-reset shadow-sm rounded hov-shadow-md text-center">
                                 <img
                                     src="{{ static_asset('assets/img/placeholder.jpg') }}"
                                     data-src="{{ uploaded_asset($category->icon) }}"
                                     alt="{{ $category->getTranslation('name') }}"
-                                    class="lazyload img-fit"
-                                    height="50"
+                                    class="lazyload category_icon"
+                                    height="100"
                                     onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder-rect.jpg') }}';"
                                 >
                                 <div
