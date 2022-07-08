@@ -157,7 +157,7 @@
                 <span class="fw-600">{{ single_price($total) }}</span>
             </div>
             <div class="px-3 py-2 text-center border-top">
-                <div class="mt-3 mb-3">Order more than ¥8500 & get free delivery</div>
+                <div class="mt-3 mb-3 font-weight-bold text-dark">Order more than ¥8500 & get free delivery</div>
                 <ul class="list-inline mb-0">
                     <li class="list-inline-item">
                         <a href="{{ route('cart') }}" class="btn btn-soft-primary btn-sm">
