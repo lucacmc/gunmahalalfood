@@ -70,7 +70,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">{{translate('Banner Url')}}</label>
+                        <label class="col-md-3 col-form-label">{{translate('Link banner to')}}</label>
                         <div class="col-md-9">
                             <input type="url" name="banner_url" class="form-control" id="banner_url"
                                    placeholder="{{translate('Banner Url')}}">
