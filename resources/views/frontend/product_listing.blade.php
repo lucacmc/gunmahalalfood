@@ -286,7 +286,7 @@
                                 <div class="product-category mb-4 pb-3 pt-3">
                                     <ul class="list-unstyled row gutters-10">
                                         @foreach ($sub_cates as $key => $sub)
-                                            <li class="col-6 col-sm-3 col-md-2 mt-2">
+                                            <li class="col-6 col-sm-3 col-md-2 mt-2 sub-cat-item">
                                                 <a href="{{ route('products.category', $sub->slug) }}"
                                                    class="d-block rounded bg-white p-2 text-reset shadow-sm rounded hov-shadow-md text-center">
                                                     <img

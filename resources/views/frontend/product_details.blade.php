@@ -23,12 +23,12 @@
     <meta name="twitter:label1" content="Price">
 
     <!-- Open Graph data -->
-    <meta property="og:title" content="{{ $detailedProduct->meta_title }}" />
-    <meta property="og:type" content="og:product" />
-    <meta property="og:url" content="{{ route('product', $detailedProduct->slug) }}" />
-    <meta property="og:image" content="{{ uploaded_asset($detailedProduct->meta_img) }}" />
-    <meta property="og:description" content="{{ $detailedProduct->meta_description }}" />
-    <meta property="og:site_name" content="{{ get_setting('meta_title') }}" />
+    <meta property="og:title" content="{{ $detailedProduct->meta_title }}"/>
+    <meta property="og:type" content="og:product"/>
+    <meta property="og:url" content="{{ route('product', $detailedProduct->slug) }}"/>
+    <meta property="og:image" content="{{ uploaded_asset($detailedProduct->meta_img) }}"/>
+    <meta property="og:description" content="{{ $detailedProduct->meta_description }}"/>
+    <meta property="og:site_name" content="{{ get_setting('meta_title') }}"/>
     <meta property="og:price:amount" content="{{ single_price($detailedProduct->unit_price) }}"/>
     <meta property="product:price:currency"
           content="{{ \App\Models\Currency::findOrFail(get_setting('system_default_currency'))->code }}"/>
@@ -41,156 +41,176 @@
             <div class="p-3">
                 <div class="row">
                     <div class="bg-white col-md-3 rounded shadow-sm">
-                        <div class="fs-15 fw-600 p-3 border-bottom">
-                            {{ translate('Categories')}}
-                        </div>
-                        <div class="p-3">
-                            <ul class="list-unstyled">
-                                @foreach (\App\Models\Category::where('level', 0)->get() as $category)
-                                    <li class="mb-2 ml-2">
-                                        <a class="text-reset fs-14 category-item"
-                                           href="{{ route('products.category', $category->slug) }}">
-                                            <img
-                                                src="{{ static_asset('assets/img/placeholder.jpg') }}"
-                                                data-src="{{ uploaded_asset($category->icon) }}"
-                                                alt="{{ $category->getTranslation('name') }}"
-                                                class="lazyload category_icon"
-                                                height="50"
-                                                onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder-rect.jpg') }}';"
-                                            >
-                                            {{ $category->getTranslation('name') }}</a>
-                                        @if (isset($category_id))
-                                            <ul class="sub-cat-menu">
-                                                @foreach (\App\Utility\CategoryUtility::get_immediate_children_ids($category_id) as $key => $id)
-                                                    <li class="ml-4 mb-2">
-                                                        <a class="text-reset fs-14"
-                                                           href="{{ route('products.category', \App\Models\Category::find($id)->slug) }}">{{ \App\Models\Category::find($id)->getTranslation('name') }}</a>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                        @endif
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        <div class="order-1 order-xl-0">
-                            @if ($detailedProduct->added_by == 'seller' && $detailedProduct->user->shop != null)
-                                <div class="bg-white shadow-sm mb-3">
-                                    <div class="position-relative p-3 text-left">
-                                        @if ($detailedProduct->user->shop->verification_status)
-                                            <div class="absolute-top-right p-2 bg-white z-1">
-                                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
-                                                     xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"
-                                                     viewBox="0 0 287.5 442.2" width="22" height="34">
-                                            <polygon style="fill:#F8B517;"
-                                                     points="223.4,442.2 143.8,376.7 64.1,442.2 64.1,215.3 223.4,215.3 "/>
-                                                    <circle style="fill:#FBD303;" cx="143.8" cy="143.8" r="143.8"/>
-                                                    <circle style="fill:#F8B517;" cx="143.8" cy="143.8" r="93.6"/>
-                                                    <polygon style="fill:#FCFCFD;" points="143.8,55.9 163.4,116.6 227.5,116.6 175.6,154.3 195.6,215.3 143.8,177.7 91.9,215.3 111.9,154.3
-                                            60,116.6 124.1,116.6 "/>
-                                        </svg>
-                                            </div>
-                                        @endif
-                                        <div class="opacity-50 fs-12 border-bottom">{{ translate('Sold by')}}</div>
-                                        <a href="{{ route('shop.visit', $detailedProduct->user->shop->slug) }}"
-                                           class="text-reset d-block fw-600">
-                                            {{ $detailedProduct->user->shop->name }}
-                                            @if ($detailedProduct->user->shop->verification_status == 1)
-                                                <span class="ml-2"><i class="fa fa-check-circle"
-                                                                      style="color:green"></i></span>
-                                            @else
-                                                <span class="ml-2"><i class="fa fa-times-circle" style="color:red"></i></span>
-                                            @endif
-                                        </a>
-                                        <div
-                                            class="location opacity-70">{{ $detailedProduct->user->shop->address }}</div>
-                                        <div class="text-center border rounded p-2 mt-3">
-                                            <div class="rating">
-                                                @if ($total > 0)
-                                                    {{ renderStarRating($detailedProduct->user->shop->rating) }}
-                                                @else
-                                                    {{ renderStarRating(0) }}
-                                                @endif
-                                            </div>
-                                            <div class="opacity-60 fs-12">
-                                                ({{ $total }} {{ translate('customer reviews')}})
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row no-gutters align-items-center border-top">
-                                        <div class="col">
-                                            <a href="{{ route('shop.visit', $detailedProduct->user->shop->slug) }}"
-                                               class="d-block btn btn-soft-primary rounded-0">{{ translate('Visit Store')}}</a>
-                                        </div>
-                                        <div class="col">
-                                            <ul class="social list-inline mb-0">
-                                                <li class="list-inline-item mr-0">
-                                                    <a href="{{ $detailedProduct->user->shop->facebook }}"
-                                                       class="facebook" target="_blank">
-                                                        <i class="lab la-facebook-f opacity-60"></i>
-                                                    </a>
-                                                </li>
-                                                <li class="list-inline-item mr-0">
-                                                    <a href="{{ $detailedProduct->user->shop->google }}" class="google"
-                                                       target="_blank">
-                                                        <i class="lab la-google opacity-60"></i>
-                                                    </a>
-                                                </li>
-                                                <li class="list-inline-item mr-0">
-                                                    <a href="{{ $detailedProduct->user->shop->twitter }}"
-                                                       class="twitter" target="_blank">
-                                                        <i class="lab la-twitter opacity-60"></i>
-                                                    </a>
-                                                </li>
-                                                <li class="list-inline-item">
-                                                    <a href="{{ $detailedProduct->user->shop->youtube }}"
-                                                       class="youtube" target="_blank">
-                                                        <i class="lab la-youtube opacity-60"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                        <div class="aiz-filter-sidebar collapse-sidebar-wrap sidebar-xl sidebar-right z-1035">
+                            <div class="overlay overlay-fixed dark c-pointer" data-toggle="class-toggle"
+                                 data-target=".aiz-filter-sidebar" data-same=".filter-sidebar-thumb"></div>
+                            <div class="collapse-sidebar c-scrollbar-light text-left">
+                                <div
+                                    class="d-flex d-xl-none justify-content-between align-items-center pl-3 border-bottom">
+                                    <h3 class="h6 mb-0 fw-600">{{ translate('Filters') }}</h3>
+                                    <button type="button" class="btn btn-sm p-2 filter-sidebar-thumb"
+                                            data-toggle="class-toggle" data-target=".aiz-filter-sidebar">
+                                        <i class="las la-times la-2x"></i>
+                                    </button>
                                 </div>
-                            @endif
-                            <div class="mb-3">
-                                <div class="p-3 border-bottom fs-16 fw-600">
-                                    {{ translate('Top Selling Products')}}
+                                <div class="fs-15 fw-600 p-3 border-bottom">
+                                    {{ translate('Categories')}}
                                 </div>
                                 <div class="p-3">
-                                    <ul class="list-group list-group-flush">
-                                        @foreach (filter_products(\App\Models\Product::where('user_id', $detailedProduct->user_id)->orderBy('num_of_sale', 'desc'))->limit(6)->get() as $key => $top_product)
-                                            <li class="py-3 px-0 list-group-item border-light">
-                                                <div class="row gutters-10 align-items-center">
-                                                    <div class="col-5">
-                                                        <a href="{{ route('product', $top_product->slug) }}"
-                                                           class="d-block text-reset">
-                                                            <img
-                                                                class="img-fit lazyload h-xxl-110px h-xl-80px h-120px"
-                                                                src="{{ static_asset('assets/img/placeholder.jpg') }}"
-                                                                data-src="{{ uploaded_asset($top_product->thumbnail_img) }}"
-                                                                alt="{{ $top_product->getTranslation('name') }}"
-                                                                onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';"
-                                                            >
-                                                        </a>
-                                                    </div>
-                                                    <div class="col-7 text-left">
-                                                        <h4 class="fs-13 text-truncate-2">
-                                                            <a href="{{ route('product', $top_product->slug) }}"
-                                                               class="d-block text-reset">{{ $top_product->getTranslation('name') }}</a>
-                                                        </h4>
-                                                        <div class="rating rating-sm mt-1">
-                                                            {{ renderStarRating($top_product->rating) }}
-                                                        </div>
-                                                        <div class="mt-2">
-                                                            <span
-                                                                class="fs-17 fw-600 text-primary">{{ home_discounted_base_price($top_product) }}</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                    <ul class="list-unstyled">
+                                        @foreach (\App\Models\Category::where('level', 0)->get() as $category)
+                                            <li class="mb-2 ml-2">
+                                                <a class="text-reset fs-14 category-item"
+                                                   href="{{ route('products.category', $category->slug) }}">
+                                                    <img
+                                                        src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                                                        data-src="{{ uploaded_asset($category->icon) }}"
+                                                        alt="{{ $category->getTranslation('name') }}"
+                                                        class="lazyload category_icon"
+                                                        height="50"
+                                                        onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder-rect.jpg') }}';"
+                                                    >
+                                                    {{ $category->getTranslation('name') }}</a>
+                                                @if (isset($category_id))
+                                                    <ul class="sub-cat-menu">
+                                                        @foreach (\App\Utility\CategoryUtility::get_immediate_children_ids($category_id) as $key => $id)
+                                                            <li class="ml-4 mb-2">
+                                                                <a class="text-reset fs-14"
+                                                                   href="{{ route('products.category', \App\Models\Category::find($id)->slug) }}">{{ \App\Models\Category::find($id)->getTranslation('name') }}</a>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                @endif
                                             </li>
                                         @endforeach
                                     </ul>
+                                </div>
+                                <div class="order-1 order-xl-0 d-sm-none">
+                                    @if ($detailedProduct->added_by == 'seller' && $detailedProduct->user->shop != null)
+                                        <div class="bg-white shadow-sm mb-3">
+                                            <div class="position-relative p-3 text-left">
+                                                @if ($detailedProduct->user->shop->verification_status)
+                                                    <div class="absolute-top-right p-2 bg-white z-1">
+                                                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                                             xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                             xml:space="preserve"
+                                                             viewBox="0 0 287.5 442.2" width="22" height="34">
+                                            <polygon style="fill:#F8B517;"
+                                                     points="223.4,442.2 143.8,376.7 64.1,442.2 64.1,215.3 223.4,215.3 "/>
+                                                            <circle style="fill:#FBD303;" cx="143.8" cy="143.8"
+                                                                    r="143.8"/>
+                                                            <circle style="fill:#F8B517;" cx="143.8" cy="143.8"
+                                                                    r="93.6"/>
+                                                            <polygon style="fill:#FCFCFD;" points="143.8,55.9 163.4,116.6 227.5,116.6 175.6,154.3 195.6,215.3 143.8,177.7 91.9,215.3 111.9,154.3
+                                            60,116.6 124.1,116.6 "/>
+                                        </svg>
+                                                    </div>
+                                                @endif
+                                                <div
+                                                    class="opacity-50 fs-12 border-bottom">{{ translate('Sold by')}}</div>
+                                                <a href="{{ route('shop.visit', $detailedProduct->user->shop->slug) }}"
+                                                   class="text-reset d-block fw-600">
+                                                    {{ $detailedProduct->user->shop->name }}
+                                                    @if ($detailedProduct->user->shop->verification_status == 1)
+                                                        <span class="ml-2"><i class="fa fa-check-circle"
+                                                                              style="color:green"></i></span>
+                                                    @else
+                                                        <span class="ml-2"><i class="fa fa-times-circle"
+                                                                              style="color:red"></i></span>
+                                                    @endif
+                                                </a>
+                                                <div
+                                                    class="location opacity-70">{{ $detailedProduct->user->shop->address }}</div>
+                                                <div class="text-center border rounded p-2 mt-3">
+                                                    <div class="rating">
+                                                        @if ($total > 0)
+                                                            {{ renderStarRating($detailedProduct->user->shop->rating) }}
+                                                        @else
+                                                            {{ renderStarRating(0) }}
+                                                        @endif
+                                                    </div>
+                                                    <div class="opacity-60 fs-12">
+                                                        ({{ $total }} {{ translate('customer reviews')}})
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row no-gutters align-items-center border-top">
+                                                <div class="col">
+                                                    <a href="{{ route('shop.visit', $detailedProduct->user->shop->slug) }}"
+                                                       class="d-block btn btn-soft-primary rounded-0">{{ translate('Visit Store')}}</a>
+                                                </div>
+                                                <div class="col">
+                                                    <ul class="social list-inline mb-0">
+                                                        <li class="list-inline-item mr-0">
+                                                            <a href="{{ $detailedProduct->user->shop->facebook }}"
+                                                               class="facebook" target="_blank">
+                                                                <i class="lab la-facebook-f opacity-60"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li class="list-inline-item mr-0">
+                                                            <a href="{{ $detailedProduct->user->shop->google }}"
+                                                               class="google"
+                                                               target="_blank">
+                                                                <i class="lab la-google opacity-60"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li class="list-inline-item mr-0">
+                                                            <a href="{{ $detailedProduct->user->shop->twitter }}"
+                                                               class="twitter" target="_blank">
+                                                                <i class="lab la-twitter opacity-60"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li class="list-inline-item">
+                                                            <a href="{{ $detailedProduct->user->shop->youtube }}"
+                                                               class="youtube" target="_blank">
+                                                                <i class="lab la-youtube opacity-60"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    <div class="mb-3">
+                                        <div class="p-3 border-bottom fs-16 fw-600">
+                                            {{ translate('Top Selling Products')}}
+                                        </div>
+                                        <div class="p-3">
+                                            <ul class="list-group list-group-flush">
+                                                @foreach (filter_products(\App\Models\Product::where('user_id', $detailedProduct->user_id)->orderBy('num_of_sale', 'desc'))->limit(6)->get() as $key => $top_product)
+                                                    <li class="py-3 px-0 list-group-item border-light">
+                                                        <div class="row gutters-10 align-items-center">
+                                                            <div class="col-5">
+                                                                <a href="{{ route('product', $top_product->slug) }}"
+                                                                   class="d-block text-reset">
+                                                                    <img
+                                                                        class="img-fit lazyload h-xxl-110px h-xl-80px h-120px"
+                                                                        src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                                                                        data-src="{{ uploaded_asset($top_product->thumbnail_img) }}"
+                                                                        alt="{{ $top_product->getTranslation('name') }}"
+                                                                        onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';"
+                                                                    >
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-7 text-left">
+                                                                <h4 class="fs-13 text-truncate-2">
+                                                                    <a href="{{ route('product', $top_product->slug) }}"
+                                                                       class="d-block text-reset">{{ $top_product->getTranslation('name') }}</a>
+                                                                </h4>
+                                                                <div class="rating rating-sm mt-1">
+                                                                    {{ renderStarRating($top_product->rating) }}
+                                                                </div>
+                                                                <div class="mt-2">
+                                                            <span
+                                                                class="fs-17 fw-600 text-primary">{{ home_discounted_base_price($top_product) }}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -824,14 +844,18 @@
                     <input type="hidden" name="product_id" value="{{ $detailedProduct->id }}">
                     <div class="modal-body gry-bg px-3 pt-3">
                         <div class="form-group">
-                            <input type="text" class="form-control mb-3" name="title" value="{{ $detailedProduct->name }}" placeholder="{{ translate('Product Name') }}" required>
+                            <input type="text" class="form-control mb-3" name="title"
+                                   value="{{ $detailedProduct->name }}" placeholder="{{ translate('Product Name') }}"
+                                   required>
                         </div>
                         <div class="form-group">
-                            <textarea class="form-control" rows="8" name="message" required placeholder="{{ translate('Your Question') }}">{{ route('product', $detailedProduct->slug) }}</textarea>
+                            <textarea class="form-control" rows="8" name="message" required
+                                      placeholder="{{ translate('Your Question') }}">{{ route('product', $detailedProduct->slug) }}</textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-primary fw-600" data-dismiss="modal">{{ translate('Cancel')}}</button>
+                        <button type="button" class="btn btn-outline-primary fw-600"
+                                data-dismiss="modal">{{ translate('Cancel')}}</button>
                         <button type="submit" class="btn btn-primary fw-600">{{ translate('Send')}}</button>
                     </div>
                 </form>
@@ -840,7 +864,8 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="login_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="login_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog modal-dialog-zoom" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -855,9 +880,15 @@
                             @csrf
                             <div class="form-group">
                                 @if (addon_is_activated('otp_system'))
-                                    <input type="text" class="form-control h-auto form-control-lg {{ $errors->has('email') ? ' is-invalid' : '' }}" value="{{ old('email') }}" placeholder="{{ translate('Email Or Phone')}}" name="email" id="email">
+                                    <input type="text"
+                                           class="form-control h-auto form-control-lg {{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                           value="{{ old('email') }}" placeholder="{{ translate('Email Or Phone')}}"
+                                           name="email" id="email">
                                 @else
-                                    <input type="email" class="form-control h-auto form-control-lg {{ $errors->has('email') ? ' is-invalid' : '' }}" value="{{ old('email') }}" placeholder="{{  translate('Email') }}" name="email">
+                                    <input type="email"
+                                           class="form-control h-auto form-control-lg {{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                           value="{{ old('email') }}" placeholder="{{  translate('Email') }}"
+                                           name="email">
                                 @endif
                                 @if (addon_is_activated('otp_system'))
                                     <span class="opacity-60">{{  translate('Use country code before number') }}</span>
@@ -865,7 +896,8 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="password" name="password" class="form-control h-auto form-control-lg" placeholder="{{ translate('Password')}}">
+                                <input type="password" name="password" class="form-control h-auto form-control-lg"
+                                       placeholder="{{ translate('Password')}}">
                             </div>
 
                             <div class="row mb-2">
@@ -877,12 +909,14 @@
                                     </label>
                                 </div>
                                 <div class="col-6 text-right">
-                                    <a href="{{ route('password.request') }}" class="text-reset opacity-60 fs-14">{{ translate('Forgot password?')}}</a>
+                                    <a href="{{ route('password.request') }}"
+                                       class="text-reset opacity-60 fs-14">{{ translate('Forgot password?')}}</a>
                                 </div>
                             </div>
 
                             <div class="mb-5">
-                                <button type="submit" class="btn btn-primary btn-block fw-600">{{  translate('Login') }}</button>
+                                <button type="submit"
+                                        class="btn btn-primary btn-block fw-600">{{  translate('Login') }}</button>
                             </div>
                         </form>
 
@@ -899,7 +933,8 @@
                             <ul class="list-inline social colored text-center mb-5">
                                 @if (get_setting('facebook_login') == 1)
                                     <li class="list-inline-item">
-                                        <a href="{{ route('social.login', ['provider' => 'facebook']) }}" class="facebook">
+                                        <a href="{{ route('social.login', ['provider' => 'facebook']) }}"
+                                           class="facebook">
                                             <i class="lab la-facebook-f"></i>
                                         </a>
                                     </li>
@@ -913,7 +948,8 @@
                                 @endif
                                 @if (get_setting('twitter_login') == 1)
                                     <li class="list-inline-item">
-                                        <a href="{{ route('social.login', ['provider' => 'twitter']) }}" class="twitter">
+                                        <a href="{{ route('social.login', ['provider' => 'twitter']) }}"
+                                           class="twitter">
                                             <i class="lab la-twitter"></i>
                                         </a>
                                     </li>
@@ -929,9 +965,9 @@
 
 @section('script')
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             getVariantPrice();
-    	});
+        });
 
         function CopyToClipboard(e) {
             var url = $(e).data('url');
@@ -962,11 +998,12 @@
             // }
             // AIZ.plugins.notify('success', 'Copied');
         }
-        function show_chat_modal(){
+
+        function show_chat_modal() {
             @if (Auth::check())
-                $('#chat_modal').modal('show');
+            $('#chat_modal').modal('show');
             @else
-                $('#login_modal').modal('show');
+            $('#login_modal').modal('show');
             @endif
         }
 

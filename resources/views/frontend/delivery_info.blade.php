@@ -67,7 +67,7 @@
                                 $seller_products[$product->user_id] = $product_ids;
                             }
                         }
-						
+
 						$pickup_point_list = array();
 						if (get_setting('pickup_point') == 1) {
 							$pickup_point_list = \App\Models\PickupPoint::where('pick_up_status',1)->get();
@@ -99,7 +99,7 @@
                                 </li>
                                 @endforeach
                             </ul>
-                            
+
                             <div class="row border-top pt-3">
                                 <div class="col-md-6">
                                     <h6 class="fs-15 fw-600">{{ translate('Choose Delivery Type') }}</h6>
@@ -118,19 +118,38 @@
                                                 >
                                                 <span class="d-flex p-3 aiz-megabox-elem">
                                                     <span class="aiz-rounded-check flex-shrink-0 mt-1"></span>
-                                                    <span class="flex-grow-1 pl-3 fw-600">{{  translate('Home Delivery') }}</span>
+                                                    <span
+                                                        class="flex-grow-1 pl-3 fw-600">{{  translate('Home Delivery') }}</span>
                                                 </span>
                                             </label>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <label>{{  translate('Delivery Date') }}</label>
+                                                    <input type="text" name="delivery_date" id="delivery_date"/>
+                                                </div>
+                                                <div class="col-6">
+                                                    <label>{{  translate('Delivery Time') }}</label>
+                                                    <select type="text" name="delivery_time" id="delivery_time">
+                                                        <option value="08:00AM-09:00AM">08:00AM-09:00AM</option>
+                                                        <option value="09:00AM-10:00AM">09:00AM-10:00AM</option>
+                                                        <option value="10:00AM-11:00AM">10:00AM-11:00AM</option>
+                                                        <option value="01:00PM -02:00PM">01:00PM -02:00PM</option>
+                                                        <option value="02:00PM -03:00PM">02:00PM -03:00PM</option>
+                                                        <option value="03:00PM -04:00PM">03:00PM -04:00PM</option>
+                                                        <option value="04:00PM -05:00PM">04:00PM -05:00PM</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                         @if ($pickup_point_list)
-                                        <div class="col-6">
-                                            <label class="aiz-megabox d-block bg-white mb-0">
-                                                <input
-                                                    type="radio"
-                                                    name="shipping_type_{{ \App\Models\User::where('user_type', 'admin')->first()->id }}"
-                                                    value="pickup_point"
-                                                    onchange="show_pickup_point(this)"
-                                                    data-target=".pickup_point_id_admin"
+                                            <div class="col-6">
+                                                <label class="aiz-megabox d-block bg-white mb-0">
+                                                    <input
+                                                        type="radio"
+                                                        name="shipping_type_{{ \App\Models\User::where('user_type', 'admin')->first()->id }}"
+                                                        value="pickup_point"
+                                                        onchange="show_pickup_point(this)"
+                                                        data-target=".pickup_point_id_admin"
                                                 >
                                                 <span class="d-flex p-3 aiz-megabox-elem">
                                                     <span class="aiz-rounded-check flex-shrink-0 mt-1"></span>
@@ -164,7 +183,7 @@
 									@endif
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                     @endif
@@ -194,7 +213,7 @@
                                         </li>
                                         @endforeach
                                     </ul>
-                                    
+
                                     <div class="row border-top pt-3">
                                         <div class="col-md-6">
                                             <h6 class="fs-15 fw-600">{{ translate('Choose Delivery Type') }}</h6>
@@ -259,7 +278,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         @endforeach

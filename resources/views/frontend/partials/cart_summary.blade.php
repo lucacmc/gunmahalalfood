@@ -82,9 +82,9 @@
                         $subtotal += cart_product_price($cartItem, $product, false, false) * $cartItem['quantity'];
                         $tax += cart_product_tax($cartItem, $product, false) * $cartItem['quantity'];
                         $product_shipping_cost = $cartItem['shipping_cost'];
-                        
+
                         $shipping += $product_shipping_cost;
-                        
+
                         $product_name_with_choice = $product->getTranslation('name');
                         if ($cartItem['variant'] != null) {
                             $product_name_with_choice = $product->getTranslation('name') . ' - ' . $cartItem['variant'];
@@ -206,17 +206,30 @@
                         <input type="hidden" name="owner_id" value="{{ $carts[0]['owner_id'] }}">
                         <div class="input-group">
                             <input type="text" class="form-control" name="code"
-                                onkeydown="return event.key != 'Enter';"
-                                placeholder="{{ translate('Have coupon code? Enter here') }}" required>
+                                   onkeydown="return event.key != 'Enter';"
+                                   placeholder="{{ translate('Have coupon code? Enter here') }}" required>
                             <div class="input-group-append">
                                 <button type="button" id="coupon-apply"
-                                    class="btn btn-primary">{{ translate('Apply') }}</button>
+                                        class="btn btn-primary">{{ translate('Apply') }}</button>
                             </div>
                         </div>
                     </form>
                 </div>
+                @endif
             @endif
-        @endif
-
+            <div class="pt-3">
+                <label class="aiz-checkbox">
+                    <input type="checkbox" required id="agree_checkbox">
+                    <span class="aiz-square-check"></span>
+                    <span>{{ translate('I agree to the') }}</span>
+                </label>
+                <a href="{{ route('terms') }}">{{ translate('terms and conditions') }}</a>,
+                <a href="{{ route('returnpolicy') }}">{{ translate('return policy') }}</a> &
+                <a href="{{ route('privacypolicy') }}">{{ translate('privacy policy') }}</a>
+            </div>
+            <div class="pt-3">
+                <button type="button" onclick="submitOrder(this)"
+                        class="btn btn-primary fw-600">{{ translate('Complete Order') }}</button>
+            </div>
     </div>
 </div>

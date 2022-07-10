@@ -15,8 +15,10 @@
     color: #5A6F43;
 }
 
+.sub-cat-item a,
 .product-category .cate_cell a {
     border: 1px solid #f1f1f1;
+    color: #000 !important;
 }
 
 .product-flash-sale {
@@ -203,7 +205,7 @@
 }
 
 .category-banner-wrap img {
-    max-width: 100%;
+    max-width: 100% !important;
 }
 
 @media only screen and (max-width: 900px) {
