@@ -317,7 +317,7 @@ class OrderController extends Controller
         $combined_order = new CombinedOrder;
         $combined_order->user_id = Auth::user()->id;
         $combined_order->shipping_address = json_encode($shippingAddress);
-        $shipping_time = $request->get('delivery_date') . ' ' . $request->get('delivery_time');
+        $shipping_time = Session::get('shipping_time');
         $combined_order->shipping_time = $shipping_time;
         $combined_order->save();
 
@@ -337,7 +337,7 @@ class OrderController extends Controller
             $order->combined_order_id = $combined_order->id;
             $order->user_id = Auth::user()->id;
             $order->shipping_address = $combined_order->shipping_address;
-            $shipping_time = $request->get('delivery_date') . ' ' . $request->get('delivery_time');
+            $shipping_time = Session::get('shipping_time');
             $order->shipping_time = $shipping_time;
             $order->additional_info = $request->additional_info;
 
