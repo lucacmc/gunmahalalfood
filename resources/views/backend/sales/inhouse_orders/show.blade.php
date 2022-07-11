@@ -110,20 +110,22 @@
                         {{ json_decode($order->manual_payment_data)->trx_id }}
                         <br>
                         <a href="{{ uploaded_asset(json_decode($order->manual_payment_data)->photo) }}"
-                            target="_blank"><img
+                           target="_blank"><img
                                 src="{{ uploaded_asset(json_decode($order->manual_payment_data)->photo) }}" alt=""
                                 height="100"></a>
                     @endif
+                    <div><strong>{{ translate('Shipping Time') }}:</strong></div>
+                    <div>{{$order->shipping_time}}</div>
                 </div>
                 <div class="col-md-4 ml-auto">
                     <table>
                         <tbody>
-                            <tr>
-                                <td class="text-main text-bold">{{ translate('Order #') }}</td>
-                                <td class="text-info text-bold text-right">{{ $order->code }}</td>
-                            </tr>
-                            <tr>
-                                <td class="text-main text-bold">{{ translate('Order Status') }}</td>
+                        <tr>
+                            <td class="text-main text-bold">{{ translate('Order #') }}</td>
+                            <td class="text-info text-bold text-right">{{ $order->code }}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-main text-bold">{{ translate('Order Status') }}</td>
                                 <td class="text-right">
                                     @if ($delivery_status == 'delivered')
                                         <span
