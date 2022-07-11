@@ -128,7 +128,7 @@
                                                     </label>
                                                 </div>
                                                 @php
-                                                    $shipping_time = explode(',',Session::get('shipping_time'));
+                                                    $shipping_time = explode(' ',Session::get('shipping_time'));
                                                     if(!isset($shipping_time[0])) $shipping_time[0] = '';
                                                     if(!isset($shipping_time[1])) $shipping_time[1] = '';
                                                 @endphp
