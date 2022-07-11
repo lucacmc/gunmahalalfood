@@ -337,7 +337,8 @@ class OrderController extends Controller
             $order->combined_order_id = $combined_order->id;
             $order->user_id = Auth::user()->id;
             $order->shipping_address = $combined_order->shipping_address;
-
+            $shipping_time = $request->get('delivery_date') . ' ' . $request->get('delivery_time');
+            $order->shipping_time = $shipping_time;
             $order->additional_info = $request->additional_info;
 
             $order->shipping_type = $carts[0]['shipping_type'];
