@@ -48,14 +48,17 @@
     <link rel="icon" href="{{ uploaded_asset(get_setting('site_icon')) }}">
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap"
+        rel="stylesheet">
 
     <!-- CSS Files -->
     <link rel="stylesheet" href="{{ static_asset('assets/css/vendors.css') }}">
     @if(\App\Models\Language::where('code', Session::get('locale', Config::get('app.locale')))->first()->rtl == 1)
-    <link rel="stylesheet" href="{{ static_asset('assets/css/bootstrap-rtl.min.css') }}">
+        <link rel="stylesheet" href="{{ static_asset('assets/css/bootstrap-rtl.min.css') }}">
     @endif
     <link rel="stylesheet" href="{{ static_asset('assets/css/aiz-core.css') }}">
+    <link rel="stylesheet" href="{{ static_asset('assets/datepicker/css/datepicker.css') }}">
     <link rel="stylesheet" href="{{ static_asset('assets/css/custom-style.css') }}">
 
 
@@ -225,15 +228,15 @@
     <!-- SCRIPTS -->
     <script src="{{ static_asset('assets/js/vendors.js') }}"></script>
     <script src="{{ static_asset('assets/js/aiz-core.js') }}"></script>
-
+    <script src="{{ static_asset('assets/datepicker/js/datepicker.js') }}"></script>
 
 
     @if (get_setting('facebook_chat') == 1)
         <script type="text/javascript">
-            window.fbAsyncInit = function() {
+            window.fbAsyncInit = function () {
                 FB.init({
-                  xfbml            : true,
-                  version          : 'v3.3'
+                    xfbml: true,
+                    version: 'v3.3'
                 });
               };
 
@@ -261,10 +264,24 @@
 
     <script>
 
-        $(document).ready(function() {
-            $('.category-nav-element').each(function(i, el) {
-                $(el).on('mouseover', function(){
-                    if(!$(el).find('.sub-cat-menu').hasClass('loaded')){
+        $(document).ready(function () {
+            $('#delivery_date').datepicker({autoHide: true});
+
+            $('#btn_delivery_continue').click(function (e) {
+                var delivery_date = new Date($('#delivery_date').val());
+                var today = new Date();
+
+                if (delivery_date < today) {
+                    e.preventDefault();
+                    $('#delivery_date').addClass('input_error')
+                    return false;
+                }
+
+            })
+
+            $('.category-nav-element').each(function (i, el) {
+                $(el).on('mouseover', function () {
+                    if (!$(el).find('.sub-cat-menu').hasClass('loaded')) {
                         $.post('{{ route('category.elements') }}', {_token: AIZ.data.csrf, id:$(el).data('id')}, function(data){
                             $(el).find('.sub-cat-menu').addClass('loaded').html(data);
                         });

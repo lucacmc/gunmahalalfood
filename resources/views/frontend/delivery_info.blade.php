@@ -101,42 +101,45 @@
                             </ul>
 
                             <div class="row border-top pt-3">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <h6 class="fs-15 fw-600">{{ translate('Choose Delivery Type') }}</h6>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <div class="row gutters-5">
-                                        <div class="col-6">
-                                            <label class="aiz-megabox d-block bg-white mb-0">
-                                                <input
-                                                    type="radio"
-                                                    name="shipping_type_{{ \App\Models\User::where('user_type', 'admin')->first()->id }}"
-                                                    value="home_delivery"
-                                                    onchange="show_pickup_point(this)"
-                                                    data-target=".pickup_point_id_admin"
-                                                    checked
-                                                >
-                                                <span class="d-flex p-3 aiz-megabox-elem">
+                                        <div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label>&nbsp;</label>
+                                                    <label class="aiz-megabox d-block bg-white mb-0">
+                                                        <input
+                                                            type="radio"
+                                                            name="shipping_type_{{ \App\Models\User::where('user_type', 'admin')->first()->id }}"
+                                                            value="home_delivery"
+                                                            onchange="show_pickup_point(this)"
+                                                            data-target=".pickup_point_id_admin"
+                                                            checked
+                                                        >
+                                                        <span class="d-flex aiz-megabox-elem"
+                                                              style="padding: 10px!important;">
                                                     <span class="aiz-rounded-check flex-shrink-0 mt-1"></span>
                                                     <span
                                                         class="flex-grow-1 pl-3 fw-600">{{  translate('Home Delivery') }}</span>
                                                 </span>
-                                            </label>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <label>{{  translate('Delivery Date') }}</label>
-                                                    <input type="text" name="delivery_date" id="delivery_date"/>
+                                                    </label>
                                                 </div>
-                                                <div class="col-6">
+                                                <div class="col-md-4">
+                                                    <label>{{  translate('Delivery Date') }}</label>
+                                                    <input class="form-control" type="text" name="delivery_date"
+                                                           id="delivery_date"/>
+
+                                                </div>
+                                                <div class="col-md-4">
                                                     <label>{{  translate('Delivery Time') }}</label>
-                                                    <select type="text" name="delivery_time" id="delivery_time">
-                                                        <option value="08:00AM-09:00AM">08:00AM-09:00AM</option>
-                                                        <option value="09:00AM-10:00AM">09:00AM-10:00AM</option>
-                                                        <option value="10:00AM-11:00AM">10:00AM-11:00AM</option>
-                                                        <option value="01:00PM -02:00PM">01:00PM -02:00PM</option>
-                                                        <option value="02:00PM -03:00PM">02:00PM -03:00PM</option>
-                                                        <option value="03:00PM -04:00PM">03:00PM -04:00PM</option>
-                                                        <option value="04:00PM -05:00PM">04:00PM -05:00PM</option>
+                                                    <select class="form-control" type="text" name="delivery_time"
+                                                            id="delivery_time">
+                                                        @foreach (\App\Utility\ProductUtility::getDeliverySlot() as $item)
+                                                            <option value="{{ $item }}">{{ $item }}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -285,11 +288,12 @@
                     @endif
 
                     <div class="pt-4 d-flex justify-content-between align-items-center">
-                        <a href="{{ route('home') }}" >
+                        <a href="{{ route('home') }}">
                             <i class="la la-angle-left"></i>
                             {{ translate('Return to shop')}}
                         </a>
-                        <button type="submit" class="btn fw-600 btn-primary">{{ translate('Continue to Payment')}}</button>
+                        <button type="submit" id="btn_delivery_continue"
+                                class="btn fw-600 btn-primary">{{ translate('Continue to Payment')}}</button>
                     </div>
                 </form>
             </div>

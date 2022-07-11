@@ -51,4 +51,23 @@ class ProductUtility
         }
         return $str;
     }
+
+    public static function getDeliverySlot()
+    {
+        $arySlot = [
+            '08am-09am',
+            '09am-10am',
+            '10am-11am',
+            '11am-12pm',
+            '12pm-01pm',
+            '01pm-02pm',
+            '02pm-03pm',
+            '03pm-04pm',
+            '05pm-06pm',
+            '06pm-07pm',
+            '07pm-08pm',
+            '08pm-09pm'
+        ];
+        return $arySlot;
+    }
 }
