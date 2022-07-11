@@ -79,6 +79,10 @@ $payment_status = $order->orderDetails->where('seller_id', Auth::user()->id)->fi
                                 {{ json_decode($order->shipping_address)->postal_code }},
                                 {{ json_decode($order->shipping_address)->country }}</td>
                         </tr>
+                        <tr>
+                            <td class="w-50 fw-600">{{ translate('Shipping time')}}:</td>
+                            <td>{{ $order->shipping_time }}</td>
+                        </tr>
                     </table>
                 </div>
                 <div class="col-lg-6">

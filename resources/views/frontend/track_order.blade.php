@@ -67,7 +67,13 @@
                                 </tr>
                                 <tr>
                                     <td class="w-50 fw-600">{{ translate('Shipping address')}}:</td>
-                                    <td>{{ json_decode($order->shipping_address)->address }}, {{ json_decode($order->shipping_address)->city }}, {{ json_decode($order->shipping_address)->country }}</td>
+                                    <td>{{ json_decode($order->shipping_address)->address }}
+                                        , {{ json_decode($order->shipping_address)->city }}
+                                        , {{ json_decode($order->shipping_address)->country }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="w-50 fw-600">{{ translate('Shipping time')}}:</td>
+                                    <td>{{ $order->shipping_time }}</td>
                                 </tr>
                             </table>
                         </div>
@@ -111,8 +117,8 @@
                     $status = $order->delivery_status;
                 @endphp
                 <div class="bg-white rounded shadow-sm mt-4">
-                    
-                    @if($orderDetail->product != null)
+
+                @if($orderDetail->product != null)
                     <div class="p-3">
                         <table class="table">
                             <thead>
