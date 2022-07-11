@@ -136,7 +136,8 @@
                                                 <div class="col-md-4">
                                                     <label>{{  translate('Delivery Date') }}</label>
                                                     <input class="form-control" type="text" name="delivery_date"
-                                                           id="delivery_date" value="{{$shipping_time[0]}}"/>
+                                                           id="delivery_date" value="{{$shipping_time[0]}}"
+                                                           autocomplete="off"/>
 
                                                 </div>
                                                 <div class="col-md-4">
