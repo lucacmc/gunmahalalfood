@@ -62,6 +62,7 @@
                                         <td class="w-50 fw-600">{{ translate('Order date')}}:</td>
                                         <td>{{ date('d-m-Y H:i A', $first_order->date) }}</td>
                                     </tr>
+
                                     <tr>
                                         <td class="w-50 fw-600">{{ translate('Name')}}:</td>
                                         <td>{{ json_decode($first_order->shipping_address)->name }}</td>
@@ -72,7 +73,13 @@
                                     </tr>
                                     <tr>
                                         <td class="w-50 fw-600">{{ translate('Shipping address')}}:</td>
-                                        <td>{{ json_decode($first_order->shipping_address)->address }}, {{ json_decode($first_order->shipping_address)->city }}, {{ json_decode($first_order->shipping_address)->country }}</td>
+                                        <td>{{ json_decode($first_order->shipping_address)->address }}
+                                            , {{ json_decode($first_order->shipping_address)->city }}
+                                            , {{ json_decode($first_order->shipping_address)->country }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w-50 fw-600">{{ translate('Shipping Time')}}:</td>
+                                        <td>{{ $first_order->shipping_time }}</td>
                                     </tr>
                                 </table>
                             </div>

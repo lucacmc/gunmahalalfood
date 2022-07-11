@@ -55,6 +55,7 @@ class ProductUtility
     public static function getDeliverySlot()
     {
         $arySlot = [
+            '',
             '08am-09am',
             '09am-10am',
             '10am-11am',

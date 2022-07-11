@@ -127,10 +127,16 @@
                                                 </span>
                                                     </label>
                                                 </div>
+                                                @php
+                                                    $shipping_time = explode(',',Session::get('shipping_time'));
+                                                    if(!isset($shipping_time[0])) $shipping_time[0] = '';
+                                                    if(!isset($shipping_time[1])) $shipping_time[1] = '';
+                                                @endphp
+
                                                 <div class="col-md-4">
                                                     <label>{{  translate('Delivery Date') }}</label>
                                                     <input class="form-control" type="text" name="delivery_date"
-                                                           id="delivery_date"/>
+                                                           id="delivery_date" value="{{$shipping_time[0]}}"/>
 
                                                 </div>
                                                 <div class="col-md-4">
@@ -138,7 +144,8 @@
                                                     <select class="form-control" type="text" name="delivery_time"
                                                             id="delivery_time">
                                                         @foreach (\App\Utility\ProductUtility::getDeliverySlot() as $item)
-                                                            <option value="{{ $item }}">{{ $item }}</option>
+                                                            <option value="{{ $item }}"
+                                                                    @if($shipping_time[1] == $item) selected @endif>{{ $item }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>

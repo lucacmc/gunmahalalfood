@@ -308,7 +308,7 @@ class OrderController extends Controller
             $shippingAddress['state']       = $address->state->name;
             $shippingAddress['city']        = $address->city->name;
             $shippingAddress['postal_code'] = $address->postal_code;
-            $shippingAddress['phone']       = $address->phone;
+            $shippingAddress['phone'] = $address->phone;
             if ($address->latitude || $address->longitude) {
                 $shippingAddress['lat_lang'] = $address->latitude . ',' . $address->longitude;
             }
@@ -317,13 +317,15 @@ class OrderController extends Controller
         $combined_order = new CombinedOrder;
         $combined_order->user_id = Auth::user()->id;
         $combined_order->shipping_address = json_encode($shippingAddress);
+        $shipping_time = $request->get('delivery_date') . ' ' . $request->get('delivery_time');
+        $combined_order->shipping_time = $shipping_time;
         $combined_order->save();
 
         $seller_products = array();
-        foreach ($carts as $cartItem){
+        foreach ($carts as $cartItem) {
             $product_ids = array();
             $product = Product::find($cartItem['product_id']);
-            if(isset($seller_products[$product->user_id])){
+            if (isset($seller_products[$product->user_id])) {
                 $product_ids = $seller_products[$product->user_id];
             }
             array_push($product_ids, $cartItem);
@@ -337,7 +339,7 @@ class OrderController extends Controller
             $order->shipping_address = $combined_order->shipping_address;
 
             $order->additional_info = $request->additional_info;
-            
+
             $order->shipping_type = $carts[0]['shipping_type'];
             if ($carts[0]['shipping_type'] == 'pickup_point') {
                 $order->pickup_point_id = $cartItem['pickup_point'];

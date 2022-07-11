@@ -208,6 +208,10 @@
     max-width: 100% !important;
 }
 
+.input_error {
+    border: 1px solid #ff4136;
+}
+
 @media only screen and (max-width: 900px) {
 
 }
