@@ -406,9 +406,9 @@
                 $('.cart-count').html(count);
                 $('#cart_items').html(view);
 
-                $('#rightCart').addClass('bounceIn animated infinite');
+                $('#rightCart').addClass('wobble animated infinite');
                 setTimeout(function () {
-                    $('#rightCart').removeClass('bounceIn animated infinite');
+                    $('#rightCart').removeClass('wobble animated infinite');
                 }, 1000);
             }
 
