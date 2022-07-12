@@ -472,7 +472,7 @@
                         </ul>
                     </li>
                 @endif
-                
+
                 <!--Blog System-->
                 @if(Auth::user()->user_type == 'admin' || in_array('23', json_decode(Auth::user()->staff->role->permissions)))
                     <li class="aiz-side-nav-item">
@@ -960,13 +960,21 @@
                                         </a>
                                     </li>
                                     <li class="aiz-side-nav-item">
-                                        <a href="{{route('states.index')}}" class="aiz-side-nav-link {{ areActiveRoutes(['states.index','states.edit','states.update'])}}">
+                                        <a href="{{route('states.index')}}"
+                                           class="aiz-side-nav-link {{ areActiveRoutes(['states.index','states.edit','states.update'])}}">
                                             <span class="aiz-side-nav-text">{{translate('Shipping States')}}</span>
                                         </a>
                                     </li>
                                     <li class="aiz-side-nav-item">
-                                        <a href="{{route('cities.index')}}" class="aiz-side-nav-link {{ areActiveRoutes(['cities.index','cities.edit','cities.update'])}}">
+                                        <a href="{{route('cities.index')}}"
+                                           class="aiz-side-nav-link {{ areActiveRoutes(['cities.index','cities.edit','cities.update'])}}">
                                             <span class="aiz-side-nav-text">{{translate('Shipping Cities')}}</span>
+                                        </a>
+                                    </li>
+                                    <li class="aiz-side-nav-item">
+                                        <a href="{{route('slots.index')}}"
+                                           class="aiz-side-nav-link {{ areActiveRoutes(['slots.index','slots.edit','slots.update'])}}">
+                                            <span class="aiz-side-nav-text">{{translate('Shipping Slots')}}</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -976,7 +984,7 @@
                     </li>
                 @endif
 
-                <!-- Staffs -->
+            <!-- Staffs -->
                 @if(Auth::user()->user_type == 'admin' || in_array('20', json_decode(Auth::user()->staff->role->permissions)))
                     <li class="aiz-side-nav-item">
                         <a href="#" class="aiz-side-nav-link">
