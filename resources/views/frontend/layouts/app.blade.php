@@ -60,7 +60,7 @@
             <link rel="stylesheet" href="{{ static_asset('assets/css/aiz-core.css') }}">
             <link rel="stylesheet" href="{{ static_asset('assets/datepicker/css/datepicker.css') }}">
             <link rel="stylesheet" href="{{ static_asset('assets/css/custom-style.css') }}">
-
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
             <script>
                 var AIZ = AIZ || {};
@@ -515,6 +515,10 @@
             }
 
             function addToCart() {
+                $('#rightCart').addClass('bounceIn animated infinite');
+                setTimeout(function () {
+                    $('#rightCart').removeClass('bounceIn animated infinite');
+                }, 1000);
                 if (checkAddToCartValidity()) {
                     $('#addToCart').modal();
                     $('.c-preloader').show();
@@ -523,6 +527,11 @@
                         url: '{{ route('cart.addToCart') }}',
                         data: $('#option-choice-form').serializeArray(),
                         success: function (data) {
+
+                            $('#rightCart').addClass('bounceIn animated infinite');
+                            setTimeout(function () {
+                                $('#rightCart').removeClass('bounceIn animated infinite');
+                            }, 1000);
 
                             $('#addToCart-modal-body').html(null);
                             $('.c-preloader').hide();
