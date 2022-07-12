@@ -139,4 +139,43 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0 h6">{{translate('Max slots booking a day ')}}</h5>
+            </div>
+            <form action="{{ route('shipping_configuration.update') }}" method="POST" enctype="multipart/form-data">
+                <div class="card-body">
+                    @csrf
+                    <input type="hidden" name="type" value="shipping_max_slot">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <input class="form-control" type="text" name="shipping_max_slot"
+                                   value="{{ get_setting('shipping_max_slot') }}">
+                        </div>
+                    </div>
+                    <div class="form-group mb-0 text-right">
+                        <button type="submit" class="btn btn-sm btn-primary">{{translate('Save')}}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0 h6">{{translate('Note')}}</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        {{ translate('1. It is setting Max Slot number user can book & select a day.') }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection

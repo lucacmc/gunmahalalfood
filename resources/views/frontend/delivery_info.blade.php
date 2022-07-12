@@ -129,7 +129,7 @@
                                                 </div>
                                                 @php
                                                     $shipping_time = explode(' ',Session::get('shipping_time'));
-                                                    if(!isset($shipping_time[0])) $shipping_time[0] = '';
+                                                    if(!isset($shipping_time[0]) || !$shipping_time[0]) $shipping_time[0] = date('m/d/Y');
                                                     if(!isset($shipping_time[1])) $shipping_time[1] = '';
                                                 @endphp
 
@@ -144,9 +144,9 @@
                                                     <label>{{  translate('Delivery Time') }}</label>
                                                     <select class="form-control" type="text" name="delivery_time"
                                                             id="delivery_time">
-                                                        @foreach (\App\Utility\ProductUtility::getDeliverySlot() as $item)
-                                                            <option value="{{ $item }}"
-                                                                    @if($shipping_time[1] == $item) selected @endif>{{ $item }}</option>
+                                                        @foreach (\App\Models\ShippingSlot::getAvaiableSlots() as $item)
+                                                            <option value="{{ $item->value }}"
+                                                                    @if($shipping_time[1] == $item->value) selected @endif>{{ $item->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
