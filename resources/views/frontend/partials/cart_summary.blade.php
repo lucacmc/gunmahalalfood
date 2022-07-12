@@ -217,7 +217,7 @@
                 </div>
                 @endif
             @endif
-            <div class="pt-3">
+            <div class="mt-3 pt-3">
                 <label class="aiz-checkbox">
                     <input type="checkbox" required id="agree_checkbox">
                     <span class="aiz-square-check"></span>
@@ -227,7 +227,7 @@
                 <a href="{{ route('returnpolicy') }}">{{ translate('return policy') }}</a> &
                 <a href="{{ route('privacypolicy') }}">{{ translate('privacy policy') }}</a>
             </div>
-            <div class="pt-3">
+            <div class="pt-3 text-center">
                 <button type="button" onclick="submitOrder(this)"
                         class="btn btn-primary fw-600">{{ translate('Complete Order') }}</button>
             </div>
