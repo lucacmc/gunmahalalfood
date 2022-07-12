@@ -19,4 +19,17 @@ class ShippingSlot extends Model
         $count = Order::where('shipping_time', 'like', '%' . $date . '%')->count();
         return $count < $max;
     }
+
+    public static function getAvaiableDate()
+    {
+        $date = date('d/m/Y');
+        if (!self::checkShippingDate($date)) {
+            $i = 1;
+            while (!self::checkShippingDate($date)) {
+                $date = date('d/m/Y', strtotime("+$i days"));
+            }
+        }
+        return $date;
+
+    }
 }
