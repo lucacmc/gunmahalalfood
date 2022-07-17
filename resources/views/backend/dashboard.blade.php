@@ -11,6 +11,80 @@
 @endif
 @if(Auth::user()->user_type == 'admin' || in_array('25', json_decode(Auth::user()->staff->role->permissions)))
 <div class="row gutters-10">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-6 col-sm-6 col-lg-3">
+                <div class="bg-gradient-1 text-white rounded-lg mb-4 overflow-hidden">
+                    <div class="px-3 pt-3">
+                        <div class="opacity-50">
+                            <span class="fs-12 d-block">{{ translate('Today\'s') }}</span>
+                            {{ translate('Sales') }}
+                        </div>
+                        <div class="h3 fw-700 mb-3">
+                            {{ \App\Models\Order::getTotalSale('today') }}
+                        </div>
+                        <div class="fw-700 mb-3">
+                            {{ \App\Models\Order::getTotalSaleAmount('today') }}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-6 col-sm-6 col-lg-3">
+                <div class="bg-gradient-2 text-white rounded-lg mb-4 overflow-hidden">
+                    <div class="px-3 pt-3">
+                        <div class="opacity-50">
+                            <span class="fs-12 d-block">{{ translate('This Month\'s') }}</span>
+                            {{ translate('Sales') }}
+                        </div>
+                        <div class="h3 fw-700 mb-3">
+                            {{ \App\Models\Order::getTotalSale('month') }}
+                        </div>
+                        <div class="fw-700 mb-3">
+                            {{ \App\Models\Order::getTotalSaleAmount('month') }}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-6 col-sm-6 col-lg-3">
+                <div class="bg-gradient-3 text-white rounded-lg mb-4 overflow-hidden">
+                    <div class="px-3 pt-3">
+                        <div class="opacity-50">
+                            <span class="fs-12 d-block">{{ translate('This Year\'s') }}</span>
+                            {{ translate('Sales') }}
+                        </div>
+                        <div class="h3 fw-700 mb-3">
+                            {{ \App\Models\Order::getTotalSale('year') }}
+                        </div>
+                        <div class="fw-700 mb-3">
+                            {{ \App\Models\Order::getTotalSaleAmount('year') }}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-6 col-sm-6 col-lg-3">
+                <div class="bg-gradient-4 text-white rounded-lg mb-4 overflow-hidden">
+                    <div class="px-3 pt-3">
+                        <div class="opacity-50">
+                            <span class="fs-12 d-block">{{ translate('Life time\'s') }}</span>
+                            {{ translate('Sales') }}
+                        </div>
+                        <div class="h3 fw-700 mb-3">
+                            {{ \App\Models\Order::getTotalSale('all') }}
+                        </div>
+                        <div class="fw-700 mb-3">
+                            {{ \App\Models\Order::getTotalSaleAmount('all') }}
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="col-lg-6">
         <div class="row gutters-10">
             <div class="col-6">

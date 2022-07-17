@@ -212,6 +212,25 @@
     border: 1px solid #ff4136;
 }
 
+.bg-gradient-1{
+    background-color: #4158D0;
+    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+}
+.bg-gradient-2{
+    background-color: #2b13c5;
+    background-image: linear-gradient(43deg, #2b13c5 0%, #50a1c8 46%, #70c1ff 100%);
+}
+.bg-gradient-3{
+    background-color: #66008b;
+    background-image: linear-gradient(43deg, #66008b 0%, #b950c8 46%, #cbb0f0 100%);
+}
+
+.bg-gradient-4{
+    background-color: #8b000f;
+    background-image: linear-gradient(43deg, #8b000f 0%, #c88650 46%, #fcff65 100%);
+}
+
+
 @media only screen and (max-width: 900px) {
 
 }

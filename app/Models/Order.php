@@ -50,4 +50,46 @@ class Order extends Model
     {
         return $this->hasMany(ProxyPayment::class)->select('reference_id');
     }
+
+    public static function getTotalSale($type='today'){
+        $total = 0;
+        switch ($type){
+            case 'year':
+                $date = date("Y");
+                $total = Order::whereRaw("DATE_FORMAT(created_at,'%Y') = '$date'")->count();
+                break;
+            case 'month':
+                $date = date("Y-m");
+                $total = Order::whereRaw("DATE_FORMAT(created_at,'%Y-%m') = '$date'")->count();
+                break;
+            case 'today':
+                $date = date("Y-m-d");
+                $total = Order::whereRaw("DATE_FORMAT(created_at,'%Y-%m-%d') = '$date'")->count();
+                break;
+            default:
+                $total = Order::count();
+        }
+        return $total;
+    }
+
+    public static function getTotalSaleAmount($type='today'){
+        $total = 0;
+        switch ($type){
+            case 'year':
+                $date = date("Y");
+                $total = Order::whereRaw("DATE_FORMAT(created_at,'%Y') = '$date'")->sum('grand_total');
+                break;
+            case 'month':
+                $date = date("Y-m");
+                $total = Order::whereRaw("DATE_FORMAT(created_at,'%Y-%m') = '$date'")->sum('grand_total');
+                break;
+            case 'today':
+                $date = date("Y-m-d");
+                $total = Order::whereRaw("DATE_FORMAT(created_at,'%Y-%m-%d') = '$date'")->sum('grand_total');
+                break;
+            default:
+                $total = Order::sum('grand_total');
+        }
+        return single_price($total);
+    }
 }
